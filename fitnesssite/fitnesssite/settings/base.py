@@ -45,6 +45,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'tailwind',
+    'theme',
+
+
 ]
 
 MIDDLEWARE = [
@@ -164,3 +169,11 @@ WAGTAILSEARCH_BACKENDS = {
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 WAGTAILADMIN_BASE_URL = "http://example.com"
+
+
+
+INTERNAL_IPS = ['127.0.0.1']
+
+#Theme Specific Settings
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = 'C:\\Program Files\\nodejs\\npm.cmd'
