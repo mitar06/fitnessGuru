@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load wagtailimages_tags %}
+{% block content %}
+    {% image page.banner_image original as img %}
+    <div class="w-full bg-cover bg-no-repeat bg-center h-96   grid md:grid-cols-3"
+         style="background-image : url('{{ img.url }}')">
+        <div class="md:col-start-2 md:col-span-1 grid items-center ">
+            <div>
+                <h2 class="text-4xl text-white text-center font-bold">{{ page.title }}</h2>
+                <h3 class="text-2xl text-white text-center ">{{ page.subtitle }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="sm:px-8 bg-[#171121] py-24">
+        <div class="container mx-auto py-8 px-8 xl:px-32 gap-y-4 md:gap-y-0 grid md:grid-cols-2 content-center sm:gap-x-4">
+            <h1 class=" text-3xl md:text-5xl text-center sm:text-left text-white px-2 self-center">
+                Services we’re providing
+                to our customers
+            </h1>
+            <p class="md:text-xl text-lg text-center sm:text-left text-gray-300 px-2 self-center">
+                Lorem ipsum dolor sit
+                amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. quis
+                nostrud exercitation ullamco laboris.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 content-center gap-y-4 sm:gap-x-4 py-8 px-8 xl:px-32 xl:container xl:mx-auto">
+            {% for service in services %}
+                <div class="w-full sm:max-w-xs overflow-hidden bg-#171121 border rounded-lg  group border-gray-200 sm:hover:bg-gray-200 hover:text-[#171121] justify-self-center">
+                    <a class="" href="{{ service.url }}">
+                        {% image service.service_image fill-300x200 as serImg %}
+                        <img class="md:group-hover:scale-105 w-full h-52 transition-all"
+                             src="{{ serImg.url }}"
+                             alt="{{ serImg.alt }}" />
+                    </a>
+                    <div class="p-5 flex flex-col sm:min-h-64 lg:mix-height-68 h-fill justify-between">
+                        <div>
+                            <a href="{{ service.url }}">
+                                <h5 class="mb-2 text-2xl font-bold md:group-hover:text-black tracking-tight text-[#2aaa8A]">{{ service.title }}</h5>
+                            </a>
+                            <p class="mb-3 font-normal text-white md:group-hover:text-gray-900 dark:text-gray-400">{{ service.description }}</p>
+                        </div>
+                        <a href="{{ service.url }}"
+                           class="group transition-all justify-items-start inline-flex items-center  text-md font-medium text-center text-[#2aaa8A] border border-b-1 border-transparent md:hover:border-b-[#2aaa8A] sm:hover:border-b-1    focus:outline-none focus:ring-blue-300 ">
+                            Read more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                                 aria-hidden="true"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

@@ -22,6 +22,7 @@
         {% if request.in_preview_panel %}
         <base target="_blank">
         {% endif %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js" defer></script>
 
         {# Global stylesheets #}
         {% tailwind_css %}
@@ -33,6 +34,7 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+        {% include 'includes/header.html' %}
         {% wagtailuserbar %}
 
         {% block content %}{% endblock %}
@@ -43,5 +45,6 @@
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
+        {% include 'includes/footer.html' %}
     </body>
 </html>
