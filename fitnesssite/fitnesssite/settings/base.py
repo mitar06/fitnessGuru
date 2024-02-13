@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    #Wagtail Generated apps
+    # Wagtail Generated apps
     "home",
     "search",
     "wagtail.contrib.forms",
@@ -46,12 +46,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    #Theme Specific
-    'tailwind',
-    'theme',
-    #Custom apps
-    'services'
-
+    "wagtail_modeladmin",
+    # Theme Specific
+    "tailwind",
+    "theme",
+    # Custom apps
+    "services",
+    "testemonials",
+    "stream_fields",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -173,9 +176,8 @@ WAGTAILSEARCH_BACKENDS = {
 WAGTAILADMIN_BASE_URL = "http://example.com"
 
 
+INTERNAL_IPS = ["127.0.0.1"]
 
-INTERNAL_IPS = ['127.0.0.1']
-
-#Theme Specific Settings
-TAILWIND_APP_NAME = 'theme'
-NPM_BIN_PATH = 'C:\\Program Files\\nodejs\\npm.cmd'
+# Theme Specific Settings
+TAILWIND_APP_NAME = "theme"
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"

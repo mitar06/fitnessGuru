@@ -11,6 +11,15 @@ ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+INSTALLED_APPS += [
+    "debug_toolbar",
+]
+
+MIDDLEWARE += [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+
+CSRF_TRUSTED_ORIGINS = ["https://4eb2-89-38-224-204.ngrok-free.app"]
 
 try:
     from .local import *

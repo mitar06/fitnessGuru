@@ -1,0 +1,20 @@
+<section class="w-full py-16 bg-gray-300">
+    <h3 class="text-3xl font-bold w-full text-center pb-16  ">{{ self.title }}</h3>
+    <ul class="relative flex flex-col md:flex-row gap-2 w-2/3 mx-auto">
+        {% for step in self.steps %}
+            <li class="md:shrink md:basis-0 flex-1 group justify-center items-center flex gap-x-2 md:block">
+                <div class="min-w-[28px] min-h-[28px] flex flex-col items-center md:w-full md:inline-flex md:flex-wrap md:flex-row  align-middle">
+                    <span class="w-12 h-12 flex text-lg md:flex-1 justify-center items-center flex-shrink-0 bg-gray-100 font-medium text-gray-800 rounded-full dark:bg-gray-700 dark:text-white">
+                        {{ forloop.counter }}
+                    </span>
+                    <div class="mt-2 w-px h-full md:mt-0 md:ms-2 md:w-full md:h-px md:flex-1 bg-gray-200 group-last:hidden dark:bg-gray-700">
+                    </div>
+                </div>
+                <div class="grow md:grow-0 md:mt-3 text-center pb-5">
+                    <span class="block t font-medium text-gray-800 dark:text-white">{{ step.step_title }}</span>
+                    <p class=" text-gray-500">{{ step.step_description }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</section>

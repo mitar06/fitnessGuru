@@ -1,16 +1,14 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags  %}
-
+{% load static wagtailcore_tags wagtailcore_tags %}
 {% block body_class %}template-homepage{% endblock %}
-
 {% block extra_css %}
-
 {% endblock extra_css %}
-
 {% block content %}
-    <div class="h-screen">
-        <div class="container mx-auto px-4">
-            <h1 class="text-lg">Title</h1>
+    <div class="min-h-screen">
+        <div class="mx-auto">
+            {% for block in page.content %}
+                {% include_block block %}
+            {% endfor %}
         </div>
     </div>
 {% endblock content %}

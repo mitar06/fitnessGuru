@@ -1,0 +1,38 @@
+{% load wagtailimages_tags %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 content-center gap-y-4 sm:gap-x-4 py-8 px-8 xl:px-32 xl:container xl:mx-auto">
+    {% for card in self.cards %}
+        <div class="w-full sm:max-w-xs overflow-hidden bg-[#171121] border rounded-lg  group border-gray-200 sm:hover:bg-gray-200 hover:text-[#171121] justify-self-center">
+            <a href="{{ card.link.value.url }}">
+                {% image card.image fill-300x200 as cardImg %}
+                <img class="md:group-hover:scale-105 w-full h-52 transition-all"
+                     src="{{ cardImg.url }}"
+                     alt="{{ cardImg.alt }}"
+                     height="{{ cardImg.height }}"
+                     width="{{ cardImg.width }}" />
+            </a>
+            <div class="p-5 flex flex-col sm:min-h-64 lg:mix-height-68 h-fill justify-between">
+                <div>
+                    <a href="{{ card.link.value.url }}">
+                        <h5 class="mb-2 text-2xl font-bold md:group-hover:text-black tracking-tight text-[#2aaa8A]">{{ card.title }}</h5>
+                    </a>
+                    {% if card.text %}
+                        <p class="mb-3 font-normal text-white md:group-hover:text-gray-900 dark:text-gray-400">{{ card.text }}</p>
+                    {% endif %}
+                </div>
+                {% if card.link.value.url %}
+                    <a href="{{ card.link.value.url }}"
+                       class="group transition-all justify-items-start inline-flex items-center  text-md font-medium text-center text-[#2aaa8A] border border-b-1 border-transparent md:hover:border-b-[#2aaa8A] sm:hover:border-b-1    focus:outline-none focus:ring-blue-300 ">
+                       
+                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

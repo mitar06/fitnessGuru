@@ -5,21 +5,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('services', '0001_initial'),
-        ('wagtailimages', '0025_alter_image_file_alter_rendition_file'),
+        ("services", "0001_initial"),
+        ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='servicelistingpage',
-            name='banner_image',
-            field=models.ForeignKey(blank=True, help_text='Select a banner Image for Services Listing page', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image'),
+            model_name="servicelistingpage",
+            name="banner_image",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Select a banner Image for Services Listing page",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.image",
+            ),
         ),
         migrations.AddField(
-            model_name='servicelistingpage',
-            name='banner_title',
+            model_name="servicelistingpage",
+            name="banner_title",
             field=models.TextField(blank=True, max_length=500),
         ),
     ]
