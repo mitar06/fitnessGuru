@@ -10,10 +10,10 @@
                 All Posts
             {% endif %}
         </h1>
-        <div class="grid  sm:gap-2  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="grid  sm:gap-2 gap-y-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {% for post in posts %}
                 {% image post.banner_image fill-300x200 as postImage %}
-                <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-xs bg-white border mx-auto border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{ post.url }}">
                         <img class="rounded-t-lg w-full h-48"
                              src="{{ postImage.url }}"
