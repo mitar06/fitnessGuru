@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags comments comments_xtd i18n cache %}
 {% block content %}
     <div class="container mx-auto px-4 md:px-16 lg:px-32  2xl:px-57 min-h-screen ">
         <div class="grid grid-cols-1  xl:grid-cols-5">
             <div class="xl:col-span-3 xl:col-start-2 ">
-                <h3 class="w-full text-center text-4xl py-8 md:py-16">{{ self.custom_title }}</h3>
+                <h3 class="w-full dark:text-white text-center text-4xl py-8 md:py-16">{{ self.custom_title }}</h3>
                 {% for block in self.content %}
                     {% if block.block_type == 'rich_text' %}
-                        <div class="prose prose-img:mx-auto prose-a:text-blue-600 prose-h4:text-xl prose-h3:text-2xl max-w-none lg:px-4">
+                        <div class="prose prose-img:mx-auto prose-bold:dark:text-3xl prose-p:dark:text-gray-400 prose-h1:dark:text-white prose-h2:dark:text-white prose-ol:dark:text-white prose-h4:dark:text-white prose-h3:dark:text-white prose-ul:dark:text-white prose-a:dark:text-blue-500  prose-a:text-blue-600 prose-h4:text-xl prose-h3:text-2xl max-w-none lg:px-4">
                             {% include_block block %}
                         </div>
                     {% else %}
@@ -30,6 +30,13 @@
                         {% endfor %}
                     </ul>
                 </div>
+            </div>
+            <div class="xl:col-span-3 xl:col-start-2 border border-gray-400 rounded-lg p-2">
+                <h4 class="text-xl py-4 font-semibold text-center dark:text-white">{% trans 'Comments' %}</h4>
+                {% cache 1000 comment_tree self.id %}
+                {% render_xtdcomment_tree for self allow_flagging allow_feedback show_feedback %}
+                {% endcache %}
+                {% render_comment_form for self %}
             </div>
         </div>
     </div>

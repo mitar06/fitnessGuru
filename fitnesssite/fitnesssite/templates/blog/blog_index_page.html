@@ -2,8 +2,8 @@
 {% load wagtailimages_tags %}
 {% block content %}
     <div class="min-h-screen container mx-auto px-4 sm:px-0 xl:px-16">
-        <h1 class="text-4xl font-semibold text-center py-6 pt-12 ">{{ self.custom_title }}</h1>
-        <h1 class="text-2xl font-semibold text-center pb-8">
+        <h1 class="text-4xl dark:text-white font-semibold text-center py-6 pt-4  md:pt-12 ">{{ self.custom_title }}</h1>
+        <h1 class="text-2xl dark:text-white font-semibold text-center pb-8">
             {% if filtered_category %}
                 {{ filtered_category }} Category
             {% else %}
@@ -22,7 +22,7 @@
                              width="{{ postImage.width }}" />
                     </a>
                     <div class="p-5">
-                        <span class="dark:text-white">{{ post.last_published_at }}</span>
+                        <span class="dark:text-white">{{ post.last_published_at|date:"M d, Y" }}</span>
                         <a href="#">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.custom_title }}</h5>
                         </a>

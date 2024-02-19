@@ -20,6 +20,14 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
+SITE_ID = 1
+SITE_URL = "http://localhost:8000"
+
+# Blog post comments settings
+COMMENTS_HIDE_REMOVED = True
+COMMENTS_XTD_MAX_THREAD_LEVEL = 3
+COMMENTS_APP = "django_comments_xtd"
+COMMENTS_XTD_CONFIRM_EMAIL = False
 
 # Application definition
 
@@ -45,12 +53,16 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "django.contrib.sites",
     "django.contrib.staticfiles",
     "wagtail_modeladmin",
     "wagtailmenus",
+    "django_comments_xtd",
+    "django_comments",
     # Theme Specific
     "tailwind",
     "theme",
+    "widget_tweaks",
     # Custom apps
     "services",
     "testemonials",

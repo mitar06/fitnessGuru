@@ -11,6 +11,8 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from wagtail.snippets.models import register_snippet
 
+from django.shortcuts import reverse
+
 @register_snippet
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -92,6 +94,25 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogDetailPage(Page):
+    
+    def get_absolute_url(self,request=None):
+
+        
+        possible_sites = [
+            (pk, path, url, language_code)
+            for pk, path, url, language_code in self._get_site_root_paths(request)
+            if self.url_path.startswith(path)
+        ]
+
+        if not possible_sites:
+            return None
+
+        site_id, root_path, root_url, language_code = possible_sites[0]
+
+
+        return reverse(
+            'wagtail_serve', args=(self.url_path[len(root_path):],))
+
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     custom_title = models.CharField(
         max_length=100, blank=False, null=False, help_text="Overrides Wagtail title."

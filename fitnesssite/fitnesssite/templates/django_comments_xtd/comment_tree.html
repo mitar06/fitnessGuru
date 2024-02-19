@@ -1,0 +1,157 @@
+{% load i18n %}
+{% load comments %}
+{% load comments_xtd %}
+{% for item in comments %}
+  <div id="c{{ item.comment.id }}" class="  d-flex">
+    <article class=" {% if not item.comment.is_removed %}px-2 md:px-6 md:pt-6 mb-2 {% else %} px-2 md:px-6 py-2 mb-1 {% endif %} text-base bg-white rounded-lg dark:bg-gray-900">
+      <footer class="flex justify-between items-center mb-2">
+        <div class="flex items-center space-x-2">
+          <p class="inline-flex items-center font-semibold text-sm text-gray-900 dark:text-white">
+            <img class="mr-2 w-6 h-6 rounded-full"
+                 src="{{ item.comment.user_email|xtd_comment_gravatar_url }}"
+                 alt="{{ item.comment.name }}">
+            {{ item.comment.name }}
+          </p>
+          {% if item.comment.user and item.comment.user|has_permission:"django_comments.can_moderate" %}
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">Moderator</span>
+          {% endif %}
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            <time pubdate datetime="{{ item.comment.submit_date }}" title="">{{ item.comment.submit_date }}</time>
+          </p>
+        </div>
+        {% if not item.comment.is_removed %}
+          <button id="dropdownComment{{ item.comment.id }}Button"
+                  data-dropdown-toggle="dropdownComment{{ item.comment.id }}"
+                  class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:text-gray-400 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                  type="button">
+            <svg class="w-4 h-4"
+                 aria-hidden="true"
+                 xmlns="http://www.w3.org/2000/svg"
+                 fill="currentColor"
+                 viewBox="0 0 16 3">
+              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+            </svg>
+            <span class="sr-only">Comment settings</span>
+          </button>
+          <!-- Dropdown menu -->
+          <div id="dropdownComment{{ item.comment.id }}"
+               class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownComment{{ item.comment.id }}Button">
+              <li>
+                <a href="#"
+                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+              </li>
+              {% if perms.comments.can_moderate %}
+                <li>
+                  <a class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                     href="{% url 'comments-delete' item.comment.pk %}">Remove</a>
+                </li>
+              {% endif %}
+              <li>
+                <a href="#"
+                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+      </footer>
+      {% if item.comment.is_removed %}
+        <p class="italic text-red-300{% if not allow_feedback and not item.comment.allow_thread %} pb-3{% endif %}">
+          <em>{% trans "This comment has been removed." %}</em>
+        </p>
+      {% else %}
+        <div class="content dark:text-white{% if not allow_feedback and not item.comment.allow_thread %} pt-1 pb-3{% else %} py-1{% endif %}">
+          {% include "includes/django_comments_xtd/comment_content.html" with content=item.comment.comment %}
+        </div>
+      {% endif %}
+      {% if not item.comment.is_removed %}
+        <div class="flex items-center pb-2 space-x-4">
+          {% if allow_feedback and not item.comment.is_removed %}
+            {% include "includes/django_comments_xtd/user_feedback.html" %}
+          {% endif %}
+          {% if item.comment.allow_thread and not item.comment.is_removed %}
+            {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
+            <a href="{{ item.comment.get_reply_url }}"
+               class="flex items-center font-medium text-sm text-gray-500 hover:underline dark:text-gray-400">
+              <svg class="mr-1.5 w-3 h-3"
+                   aria-hidden="true"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill="currentColor"
+                   viewBox="0 0 20 18">
+                <path d="M18 0H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2v4a1 1 0 0 0 1.707.707L10.414 13H18a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5 4h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2ZM5 4h5a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2Zm2 5H5a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Zm9 0h-6a1 1 0 0 1 0-2h6a1 1 0 1 1 0 2Z" />
+              </svg>
+              {% trans "Reply" %}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if not item.comment.is_removed and item.children %}
+        <div>{% render_xtdcomment_tree with comments=item.children %}</div>
+      {% endif %}
+    </article>
+  </div>
+  {% comment %}
+<img src="{{ item.comment.user_email|xtd_comment_gravatar_url }}" class="me-3" height="48" width="48" alt="userAvatar" />
+<div class="d-flex flex-column flex-grow-1">
+  <h6 class="comment-header mb-1 d-flex justify-content-between" style="font-size: 0.8rem">
+    <div class="d-inline flex-grow-1">
+      <span>{{ item.comment.submit_date }}&nbsp;-&nbsp;
+        {% if item.comment.url and not item.comment.is_removed %}
+        <a href="{{ item.comment.url }}" target="_new" class="text-decoration-none">
+          {% endif %}
+          {{ item.comment.name }}
+          {% if item.comment.url %}</a>{% endif %}
+      </span>
+      <span>
+        {% if item.comment.user and item.comment.user|has_permission:"django_comments.can_moderate" %}
+        &nbsp;<span class="badge text-bg-secondary">{% trans "moderator" %}</span>
+        {% endif %}
+        &nbsp;&nbsp;<a class="permalink text-decoration-none" title="{% trans 'comment permalink' %}" href="{% get_comment_permalink item.comment %}">¶</a></span>
+    </div>
+    <div class="d-inline">
+      {% if not item.comment.is_removed %}
+      {% if perms.comments.can_moderate %}
+      {% if item.flagged_count %}
+      <span class="small text-danger" title="{% blocktrans count counter=item.flagged_count %}A user has flagged this comment as inappropriate.{% plural %}{{ counter }} users have flagged this comment as inappropriate.{% endblocktrans %}">{{
+        item.flagged_count }}</span>
+      {% endif %}
+      {% endif %}
+      {% if allow_flagging and request.user in item.flagged %}
+      <i class="bi bi-flag text-danger" title="{% trans 'comment flagged' %}"></i>
+      {% elif allow_flagging %}
+      <a class="text-decoration-none" href="{% url 'comments-flag' item.comment.pk %}">
+        <i class="bi bi-flag" title="{% trans 'flag comment' %}"></i>
+      </a>
+      {% endif %}
+      {% if perms.comments.can_moderate %}
+      {% if allow_flagging %}<span class="text-muted">&bull;</span>{% endif %}
+      <a class="text-decoration-none" href="{% url 'comments-delete' item.comment.pk %}"><i class="bi bi-trash" title="{% trans 'remove comment' %}"></i></a>
+      {% endif %}
+      {% endif %}
+    </div>
+  </h6>
+  {% if item.comment.is_removed %}
+  <p class="text-muted{% if not allow_feedback and not item.comment.allow_thread %} pb-3{% endif %}">
+    <em>{% trans "This comment has been removed." %}</em>
+  </p>
+  {% else %}
+  <div class="content{% if not allow_feedback and not item.comment.allow_thread %} pt-1 pb-3{% else %} py-1{% endif %}">
+    {% include "includes/django_comments_xtd/comment_content.html" with content=item.comment.comment %}
+  </div>
+  <div>
+    {% if allow_feedback %}
+    {% include "includes/django_comments_xtd/user_feedback.html" %}
+    {% endif %}
+    {% if item.comment.allow_thread and not item.comment.is_removed %}
+    {% if allow_feedback %}&nbsp;&nbsp;<span class="text-muted">&bull;</span>&nbsp;&nbsp;{% endif %}
+    <a class="small text-decoration-none" href="{{ item.comment.get_reply_url }}">{% trans "Reply" %}</a>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% if not item.comment.is_removed and item.children %}
+  <div class="py-3">{% render_xtdcomment_tree with comments=item.children %}</div>
+  {% endif %}
+</div>
+  {% endcomment %}
+{% endfor %}
