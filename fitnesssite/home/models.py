@@ -7,6 +7,21 @@ from stream_fields import blocks
 from wagtail.snippets.blocks import SnippetChooserBlock
 
 
+from django.db import models
+from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.images.models import Image
+
+
+@register_setting
+class SiteSettings(BaseSiteSetting):
+    logo = models.OneToOneField(Image, null=True, blank=True, on_delete=models.SET_NULL, related_name='+', verbose_name='Business logo for navigation')
+    fav_icon =  models.OneToOneField(Image, null=True, blank=True, on_delete=models.SET_NULL, related_name='+', verbose_name='Icon to be displayed as fav-icon in page header (will be rezized).')
+    panels = [
+        FieldPanel('logo'),
+        FieldPanel('fav_icon'),
+    ]
+
+
 class HomePage(Page):
     body = RichTextField(blank=True)
 

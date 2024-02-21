@@ -2,8 +2,8 @@
 {% load comments %}
 {% load comments_xtd %}
 {% for item in comments %}
-  <div id="c{{ item.comment.id }}" class="  d-flex">
-    <article class=" {% if not item.comment.is_removed %}px-2 md:px-6 md:pt-6 mb-2 {% else %} px-2 md:px-6 py-2 mb-1 {% endif %} text-base bg-white rounded-lg dark:bg-gray-900">
+  <div id="c{{ item.comment.id }}" class="bg-primary">
+    <article class=" {% if not item.comment.is_removed %}px-2 md:px-6 md:pt-6 mb-2 {% else %} px-2 md:px-6 py-2 mb-1 {% endif %} text-base bg-primary rounded-lg dark:bg-gray-900">
       <footer class="flex justify-between items-center mb-2">
         <div class="flex items-center space-x-2">
           <p class="inline-flex items-center font-semibold text-sm text-gray-900 dark:text-white">

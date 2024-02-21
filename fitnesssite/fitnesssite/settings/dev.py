@@ -19,7 +19,12 @@ MIDDLEWARE += [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-CSRF_TRUSTED_ORIGINS = ["https://4eb2-89-38-224-204.ngrok-free.app"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://4eb2-89-38-224-204.ngrok-free.app",
+    "https://fdbc-89-38-224-204.ngrok-free.app",
+    "https://2b6d-89-38-224-204.ngrok-free.app",
+
+    ]
 
 try:
     from .local import *

@@ -17,10 +17,27 @@ from django.shortcuts import reverse
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, max_length=80)
+    short_description = models.TextField(
+        verbose_name="Short Description",
+        max_length=250,
+        blank=True,
+        null=True,
+        help_text="A short description of the category, max. 250 characters."
+        )
+    category_image = models.ForeignKey(
+        "wagtailimages.Image",
+        verbose_name='Category Image',
+        blank=True,
+        null=True,
+        help_text='Category Image to display as a thumbnail (resized to 150x150).',
+        on_delete=models.SET_NULL,
+        )
 
     panels = [
         FieldPanel("name"),
         FieldPanel("slug"),
+        FieldPanel("category_image"),
+        FieldPanel("short_description")
     ]
 
     def __str__(self):
