@@ -44,7 +44,7 @@ module.exports = {
     theme: {
         extend: {
           colors: {
-            'primary': '#ede1d1',
+            'primary': '#fafafa',
             'secondary' : '#16e4c4',
           },
           transitionProperty: {

@@ -4,14 +4,12 @@
     <div class="container mx-auto px-4 md:px-16 lg:px-32  2xl:px-57 min-h-screen ">
         <div class="grid grid-cols-1  xl:grid-cols-5">
             <div class="xl:col-span-3 xl:col-start-2 pb-4 ">
-                <h1 class="w-full dark:text-gray-300 text-center text-4xl py-8 md:py-16 text-secondary font-extrabold">{{ self.custom_title }}</h1>
+                <h1 class="w-full dark:text-gray-300 text-center text-4xl py-8 md:py-16 text-secondary font-extrabold">
+                    {{ self.custom_title }}
+                </h1>
                 {% for block in self.content %}
                     {% if block.block_type == 'rich_text' %}
-                        <div 
-                        class="prose prose-img:mx-auto prose-bold:dark:text-3xl 
-                        prose-p:dark:text-gray-400 prose-h1:dark:text-white  prose-h1:text-secondary prose-h2:text-secondary prose-h3:text-secondary prose-h4:text-secondary  prose-ol:dark:text-white 
-                        prose-h4:dark:text-white prose-h3:dark:text-white prose-ul:text-black prose-ul:dark:text-gray-400 prose-ul:marker:text-black prose-a:dark:text-blue-500 
-                        prose-a:text-blue-600 prose-h4:text-xl prose-h3:text-2xl max-w-none lg:px-4 prose-headings:dark:text-gray-300">
+                        <div class="prose prose-img:mx-auto prose-bold:dark:text-3xl prose-p:dark:text-gray-400 prose-h1:dark:text-white  prose-h1:text-secondary prose-h2:text-secondary prose-h3:text-secondary prose-h4:text-secondary  prose-ol:dark:text-white prose-h4:dark:text-white prose-h3:dark:text-white prose-ul:text-black prose-ul:dark:text-gray-400 prose-ul:marker:text-black prose-a:dark:text-blue-500 prose-a:text-blue-600 prose-h4:text-xl prose-h3:text-2xl max-w-none lg:px-4 prose-headings:dark:text-gray-300">
                             {% include_block block %}
                         </div>
                     {% else %}
@@ -35,9 +33,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="xl:col-span-3 xl:col-start-2 border border-gray-400 rounded-lg py-2 mt-4">
+            <div class="xl:col-span-3 xl:col-start-2 border border-gray-400 rounded-lg py-2 my-4">
                 <h4 class="text-xl py-4 font-semibold text-center dark:text-white">{% trans 'Comments' %}</h4>
-                {% cache 1000 comment_tree self.id %}
+            {% cache 1000 comment_tree self.id %}
                 {% render_xtdcomment_tree for self allow_flagging %}
             {% endcache %}
             <div class="px-2">{% render_comment_form for self %}</div>

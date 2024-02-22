@@ -1,0 +1,10 @@
+{% extends "wagtailadmin/login.html" %}
+{% load static %}
+{% block branding_login %}Sign into FitnessGuru Admin{% endblock %}
+{% block branding_logo %}
+   <div style="width: 100%;">
+    <img style="margin: 0 auto;display:block;" src="{% static 'images/fitnessguru-favicon-color.webp' %}"
+    alt="Custom Project"
+    width="100" />
+   </div>
+{% endblock %}
