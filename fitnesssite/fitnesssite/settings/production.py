@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+DEBUG = bool(os.environ.get("DEBUG",0))
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
