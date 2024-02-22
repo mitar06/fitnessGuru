@@ -4,12 +4,12 @@ from .base import *
 DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mw&gr*orj_(892bpjrxd@cz(p)nz(9glull(2r&^@e3u4@c@et"
-SECRET_KEY = os.environ.get("SECRET_KEY")
+
+SECRET_KEY = os.environ.get("SECRET_KEY",'h0u8xvxdj1q0dmtrydwfba#werp#_rdn29+iyo37y7=-nu#3%_')
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS",'*').split(" ")
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
@@ -22,7 +22,7 @@ MIDDLEWARE += [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS").split(" ")
+CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS",'http://127.0.0.1').split(" ")
 
 try:
     from .local import *
