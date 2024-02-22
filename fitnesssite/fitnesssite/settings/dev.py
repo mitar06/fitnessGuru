@@ -3,7 +3,7 @@ from .base import *
 import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG",0))
+DEBUG = bool(int(os.environ.get("DEBUG",0)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
