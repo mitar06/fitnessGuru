@@ -20,7 +20,7 @@ gzip_types
   font/eot
   font/otf
   font/ttf
-  image/svg+xml
+  image/svg+xml;
 
 
 
