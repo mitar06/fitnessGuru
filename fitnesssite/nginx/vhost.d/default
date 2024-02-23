@@ -28,6 +28,8 @@ gzip_types
   text/plain
   text/xml;
 
+  resolver 8.8.8.8;
+
 
 location /static/ {
   alias /home/app/web/staticfiles/;
