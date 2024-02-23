@@ -66,6 +66,7 @@ COPY . $APP_HOME
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
+RUN chown -R app:app /var/log/django
 
 # change to the app user
 USER app
