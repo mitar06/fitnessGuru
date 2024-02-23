@@ -10,25 +10,18 @@ gzip_min_length 256;
 gzip_types
   application/atom+xml
   application/geo+json
-  application/javascript
-  application/x-javascript
-  application/json
   application/ld+json
   application/manifest+json
   application/rdf+xml
   application/rss+xml
   application/xhtml+xml
-  application/xml
   font/eot
   font/otf
   font/ttf
   image/svg+xml
-  text/css
-  text/javascript
-  text/plain
-  text/xml;
 
-  resolver 8.8.8.8;
+  
+resolver 8.8.8.8;
 
 
 location /static/ {
