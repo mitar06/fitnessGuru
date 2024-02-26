@@ -21,7 +21,6 @@ gzip_types
   font/eot
   font/otf
   font/ttf
-  image/svg+xml
   text/css
   text/javascript
   text/plain
