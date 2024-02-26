@@ -3,15 +3,13 @@ from .base import *
 import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.environ.get("DEBUG",0)))
-
+DEBUG = True
 # SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = os.environ.get("SECRET_KEY",'h0u8xvxdj1q0dmtrydwfba#werp#_rdn29+iyo37y7=-nu#3%_')
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS",'*').split(" ")
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

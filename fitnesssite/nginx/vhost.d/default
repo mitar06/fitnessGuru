@@ -30,9 +30,15 @@ gzip_types
 location /static/ {
   alias /home/app/web/staticfiles/;
   add_header Access-Control-Allow-Origin *;
+
 }
 
 location /media/ {
+  sendfile on;
+  sendfile_max_chunk 1m;
+  tcp_nopush on;
+  tcp_nodelay on;
+  keepalive_timeout 65;
   alias /home/app/web/mediafiles/;
   add_header Access-Control-Allow-Origin *;
 }
