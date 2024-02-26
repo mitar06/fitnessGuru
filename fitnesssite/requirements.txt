@@ -4,6 +4,7 @@ asgiref==3.7.2
 beautifulsoup4==4.11.2
 binaryornot==0.4.4
 certifi==2024.2.2
+cffi==1.16.0
 chardet==5.2.0
 charset-normalizer==3.3.2
 click==8.1.7
@@ -30,6 +31,8 @@ draftjs-exporter==2.1.7
 EditorConfig==0.12.4
 et-xmlfile==1.1.0
 filetype==1.2.0
+gevent==24.2.1
+greenlet==3.0.3
 gunicorn==21.2.0
 html-tag-names==0.1.2
 html-void-elements==0.1.0
@@ -49,6 +52,7 @@ pathspec==0.12.1
 pillow==10.2.0
 pillow-heif==0.14.0
 psycopg2-binary==2.9.6
+pycparser==2.21
 Pygments==2.17.2
 python-dateutil==2.8.2
 python-slugify==8.0.3
@@ -72,3 +76,5 @@ wagtail-modeladmin==2.0.0
 wagtailmenus==3.1.9
 webencodings==0.5.1
 Willow==1.6.3
+zope.event==5.0
+zope.interface==6.2
