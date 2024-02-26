@@ -27,6 +27,11 @@ gzip_types
   text/xml;
 
 location /static/ {
+  sendfile on;
+  sendfile_max_chunk 1m;
+  tcp_nopush on;
+  tcp_nodelay on;
+  keepalive_timeout 65;
   alias /home/app/web/staticfiles/;
   add_header Access-Control-Allow-Origin *;
 
