@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: gunicorn -w 13 fitnesssite.wsgi:application --bind 0.0.0.0:8000 
+    command: gunicorn -w 8 --worker-class gevent fitnesssite.wsgi:application --bind 0.0.0.0:8000 
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
