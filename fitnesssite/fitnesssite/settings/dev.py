@@ -13,6 +13,10 @@ ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR , "media")
+
 INSTALLED_APPS += [
     "debug_toolbar",
 ]
@@ -22,8 +26,11 @@ MIDDLEWARE += [
 ]
 
 
-CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS",'http://127.0.0.1').split(" ")
-
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+    'https://7a53-31-223-131-172.ngrok-free.app',
+    'https://e7fb-31-223-131-172.ngrok-free.app',
+]
 try:
     from .local import *
 except ImportError:

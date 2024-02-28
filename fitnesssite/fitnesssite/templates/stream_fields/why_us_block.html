@@ -1,0 +1,31 @@
+{% load i18n %}
+<section class="w-full py-16 px-2 md:px-16 lg:px-32 xl:px-72 2xl:px-96">
+    <div>
+        <div class="bg-purple-100 text-purple-800 w-max mx-auto uppercase font-bold px-4 py-1 my-4 rounded dark:bg-purple-900 dark:text-purple-300">
+            {% trans self.pill_caption %}
+        </div>
+        <h2 class="text-center text-3xl xl:text-5xl font-extrabold py-4 dark:text-gray-100">{{ self.title }}</h2>
+        <h3 class="text-center font-semibold text-lg pb-2 dark:text-gray-200">{{ self.subtitle }}</h3>
+    </div>
+    <div class="container mx-auto">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-16 ">
+            {% for card in self.featured_cards %}
+                <div class="max-w-full  sm:max-w-sm p-6 bg-white border border-gray-200 rounded-xl shadow-md dark:bg-gray-800 dark:border-gray-700">
+                    <div class="inline-flex gap-4 items-center">
+                        <img src="https://placehold.co/30" alt="placeholder_icon">
+                        <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {% trans card.title %}
+                        </h5>
+                    </div>
+                    <p class="mb-3 font-medium text-lg dark:text-gray-400">
+                        {% trans card.content %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    <div class="flex justify-center">
+
+        <a href="/" class="text-purple-700  hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center mx-auto dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Zasto Izabrati FitnessGuru?</a>
+    </div>
+    </div>
+</section>

@@ -4,8 +4,8 @@
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="/" class="flex items-center justify-center">
                 {% get_settings %}
-                {% image settings.home.SiteSettings.logo width-500 as logo %}
-                <img src="{{ logo.url }}" class=" h-8 sm:h-9" alt="FitnessGuru" />
+                {% image settings.home.SiteSettings.logo fill-192x36 as logo %}
+                <img src="{{ logo.url }}" class="h-8 sm:h-9" alt="FitnessGuru" />
             </a>
             <div class="flex items-center lg:order-2">
                 <a href="#"
