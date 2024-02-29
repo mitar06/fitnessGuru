@@ -1,5 +1,23 @@
-{% load i18n %}
-<section class="w-full py-8 dark:bg-repeating-light" >
-    <h3 class="text-4xl text-center font-bold py-4 dark:text-gray-200">{% trans self.title %}</h3>
-    <h3 class="text-2xl text-center font-semibold py-4  dark:text-gray-300">{% trans self.subtitle %}</h3>
+{% load i18n wagtailimages_tags %}
+<section class="w-full pt-24 sm:pt-32 pb-32 sm:pb-48 dark:bg-repeating-light" >
+    <h3 class="text-3xl sm:text-4xl text-center font-bold pb-2 dark:text-gray-200 break-normal">{% trans self.title %}</h3>
+    <h3 class="text-xl sm:text-2xl text-center font-semibold pb-4  dark:text-gray-300">{% trans self.subtitle %}</h3>
+    <div class="flex flex-col lg:flex-row px-2 sm:px-16 justify-center items-center gap-x-8 gap-y-4 lg:gap-y-0">
+        
+        {% for card in self.free_product_cards %}
+        {% image card.card_image fill-500x300-c100 format-webp as img %}
+        <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer max-w-xl justify-self-center">
+            <img class="object-cover w-full   filter brightness-50" src="{{img.url}}" alt="{{img.alt}}" width="{{img.width}}" heigh="{{image.height}}" />
+        
+            <div class="absolute bottom-0 left-0 px-6 py-4">
+              <h4 class="mb-3 text-xl font-semibold tracking-tight text-white">{{card.title}}</h4>
+              <p class="leading-normal text-gray-100">Lorem ipsum dolor, sit amet cons ectetur adipis icing elit. Praesen tium, quibusdam facere quo laborum maiores sequi nam tenetur laud.</p>
+              <div class="mt-4">
+                {% include 'includes/stream_fields/cta_button.html' with link=card.product_link %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+            
+    </div>
 </section>

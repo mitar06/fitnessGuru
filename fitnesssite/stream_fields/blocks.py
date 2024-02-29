@@ -214,6 +214,9 @@ class FreeProductCard(blocks.StructBlock):
     title = blocks.CharBlock(
         max_length=200, help_text='Main title for this section (max 200 characters).'
     )
+    content = blocks.CharBlock(
+        max_length=200, help_text='Main content for the card (max 200 characters).'
+    )
 
 class FeaturedFreeProductBlock(blocks.StructBlock):
     title = blocks.CharBlock(
