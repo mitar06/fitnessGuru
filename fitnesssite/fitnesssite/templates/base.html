@@ -32,8 +32,11 @@
     </head>
     <body class="{% block body_class %}bg-primary dark:bg-slate-800{% endblock %}">
         {% include 'includes/header.html' %}
+        {% include 'snippets/messages.html' %}
         {% wagtailuserbar %}
-        {% block content %}{% endblock %}
+        <div class="pt-16">
+            {% block content %}{% endblock %}
+        </div>
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/fitnesssite.js' %}" defer></script>
         {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
