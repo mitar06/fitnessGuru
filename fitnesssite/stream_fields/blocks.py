@@ -161,7 +161,7 @@ class TimelineItem(blocks.StructBlock):
         max_length=50, help_text='Cursive title above the primary title'
     )
     content =  blocks.CharBlock(
-        max_length=50, help_text='Content describing the individual timeline item.'
+        max_length=300, help_text='Content describing the individual timeline item. max 300 characters.'
     )
 
     
