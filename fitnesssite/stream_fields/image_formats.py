@@ -22,8 +22,8 @@ class LazyLoadedFormat(Format):
 register_image_format(
     LazyLoadedFormat(
         'webp',
-        'Compressed .WEBP image',
+        'Lazy Loaded .webp image',
         'richtext-image webp',
-         webp_image_format_specs
+        webp_image_format_specs
     )
 )
