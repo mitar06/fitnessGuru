@@ -25,10 +25,15 @@
         {% if request.in_preview_panel %}<base target="_blank">{% endif %}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"
                 defer></script>
+
+                
         {# Global stylesheets #}
         {% tailwind_preload_css %}
         {% tailwind_css %}
-        {% block extra_css %}{# Override this in templates to add extra stylesheets #}{% endblock %}
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+        {% block extra_css %}{% endblock %}
     </head>
     <body class="{% block body_class %}bg-primary dark:bg-slate-800{% endblock %}">
         {% include 'includes/header.html' %}
@@ -36,6 +41,7 @@
         {% block content %}{% endblock %}
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/fitnesssite.js' %}" defer></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
         {% block extra_js %}{# Override this in templates to add extra javascript #}{% endblock %}
         {% include 'includes/footer.html' %}
     </body>

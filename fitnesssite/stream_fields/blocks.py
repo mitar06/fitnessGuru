@@ -229,3 +229,5 @@ class FeaturedFreeProductBlock(blocks.StructBlock):
 
     class Meta:
         template = 'stream_fields/free_products_block.html'
+
+
