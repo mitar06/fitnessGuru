@@ -11,7 +11,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY",'h0u8xvxdj1q0dmtrydwfba#werp#_rdn29+iyo
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+#EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 MEDIA_URL = "/media/"

@@ -5,21 +5,42 @@
     {% trans "Verify Your Email Address" %}
 {% endblock head_title %}
 {% block content %}
-    {% element h1 %}
-        {% trans "Verify Your Email Address" %}
-    {% endelement %}
-    {% url 'account_email' as email_url %}
-    <p>
+{% url 'account_email' as email_url %}
+<div class="min-h-screen h-auto">
+    <h1 class="text-center font-semibold dark:text-gray-100 text-2xl py-8">{% trans "Verify Your Email Address" %}</h1>
+    <p class="text-center dark:text-gray-100 text-lg mx-auto px-2 w-full  lg:w-1/2 ">
         {% blocktrans %}This part of the site requires us to verify that
+        you are who you claim to be. <br> For this purpose, we require that you
+        verify ownership of your email address. {% endblocktrans %}
+    </p>
+    <p class="text-center dark:text-gray-100 text-lg mx-auto px-2 w-full  lg:w-1/2 ">
+        {% blocktrans %}We have sent an email to you for
+        verification. Please click on the link inside that email. <br> If you do not see the verification email in your main inbox, check your spam folder. <br> Otherwise
+        contact us if you do not receive it within a few minutes.{% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans %}<strong class="text-center font-bold">Note:</strong> you can still <a class="font-medium text-primary-600 hover:underline dark:text-blue-500" href="{{ email_url }}">change your email address</a>.{% endblocktrans %}
+    </p>
+</div>
+{% endblock content %}
+
+{% comment %}
+{% element h1 %}
+{% trans "Verify Your Email Address" %}
+{% endelement %}
+{% url 'account_email' as email_url %}
+<p>
+{% blocktrans %}This part of the site requires us to verify that
 you are who you claim to be. For this purpose, we require that you
 verify ownership of your email address. {% endblocktrans %}
-    </p>
-    <p>
-        {% blocktrans %}We have sent an email to you for
+</p>
+<p>
+{% blocktrans %}We have sent an email to you for
 verification. Please click on the link inside that email. If you do not see the verification email in your main inbox, check your spam folder. Otherwise
 contact us if you do not receive it within a few minutes.{% endblocktrans %}
-    </p>
-    <p>
-        {% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your email address</a>.{% endblocktrans %}
-    </p>
-{% endblock content %}
+</p>
+<p>
+{% blocktrans %}<strong>Note:</strong> you can still <a href="{{ email_url }}">change your email address</a>.{% endblocktrans %}
+</p>
+{% endcomment %}
+    

@@ -2,8 +2,6 @@
 {% load account %}
 {% load allauth %}
 {% user_display user as user_display %}
-{% element alert %}
-    {% slot message %}
-        <strong>{% blocktranslate %}Note{% endblocktranslate %}:</strong> {% blocktranslate %}You are already logged in as {{ user_display }}.{% endblocktranslate %}
-    {% endslot %}
-{% endelement %}
+<p class="text-center text-lg dark:text-gray-100">
+    <strong class="text-center text-2xl text-red-600">{% blocktranslate %}Note{% endblocktranslate %}:</strong> {% blocktranslate %}You are already logged in as <strong class="text-center text-2xl text-red-600">{{ user_display }}</strong>.{% endblocktranslate %}
+</p>
