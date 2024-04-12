@@ -219,6 +219,9 @@ class FreeProductCard(blocks.StructBlock):
     )
 
 class FeaturedFreeProductBlock(blocks.StructBlock):
+    '''
+    Used for accentuating a free Ebook or a Giveaway
+    '''
     title = blocks.CharBlock(
         max_length=200, help_text='Main title for this section (max 200 characters).'
     )
@@ -231,3 +234,12 @@ class FeaturedFreeProductBlock(blocks.StructBlock):
         template = 'stream_fields/free_products_block.html'
 
 
+class SinglePlanBreakdownAndImageBlock(blocks.StructBlock):
+    '''
+    Used to showcase a single meal/workout plan.
+    Chosen image will be inset and overlayed by plan bullet points
+    '''
+
+
+    class Meta:
+        template = 'stream_fields/single_plan_breakdown_and_image_block.html'
