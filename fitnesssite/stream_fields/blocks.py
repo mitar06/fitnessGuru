@@ -234,11 +234,35 @@ class FeaturedFreeProductBlock(blocks.StructBlock):
         template = 'stream_fields/free_products_block.html'
 
 
+class PlanBreakdownListItem(blocks.StructBlock):
+    '''
+    A list item showing a bullet point in a showcase block
+    '''
+    text = blocks.CharBlock(
+        max_length=200, help_text='A single feature of the product.'
+    )
+
 class SinglePlanBreakdownAndImageBlock(blocks.StructBlock):
     '''
     Used to showcase a single meal/workout plan.
     Chosen image will be inset and overlayed by plan bullet points
     '''
+
+    title = blocks.CharBlock(
+        max_length=200, help_text='Main title for this section (max 200 characters).'
+    )
+    subtitle = blocks.CharBlock(
+        max_length=200, help_text='Optional subtitle, (max 200 characters).'
+    )
+
+    list_items = blocks.ListBlock(
+        PlanBreakdownListItem(), 
+        max_num=6
+    )
+
+    showcase_image = ImageChooserBlock(
+        help_text='Image to be displayed with the plan breakdown.'
+    )
 
 
     class Meta:

@@ -37,6 +37,7 @@ class HomePage(Page):
             ("timeline", blocks.TimelineBlock()),
             ('why_us',blocks.WhyUsBlock()),
             ("free_products", blocks.FeaturedFreeProductBlock()),
+            ('plan_showcase', blocks.SinglePlanBreakdownAndImageBlock())
         ],
         null=True,
         blank=True,
