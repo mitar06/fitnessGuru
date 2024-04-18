@@ -1,0 +1,35 @@
+{% load static %}
+{% with id=widget.attrs.id %}
+    <div {% if id %}id="{{ id }}"{% endif %}
+         {% if widget.attrs.class %}class="{{ widget.attrs.class }}"{% endif %}>
+         {% if widget.attrs.decorative_image %}
+            <div class="text-lg font-bold flex justify-center">
+               <img class="w-full h-auto" src="{% static widget.attrs.decorative_image %} " alt="">
+            </div>
+         {% endif %}
+         {% if widget.attrs.decorative_title %}
+            <div class="text-2xl text-center font-bold mt-4 dark:text-gray-400">
+                {{widget.attrs.decorative_title}}
+            </div>
+         {% endif %}
+
+         {% if widget.attrs.decorative_subtitle %}
+         <div class="text-lg text-center font-medium dark:text-gray-200">
+             {{widget.attrs.decorative_subtitle}}
+         </div>
+      {% endif %}
+            
+        {% for group, options, index in widget.optgroups %}
+            {% if group %}
+                <div>
+                    <label>{{ group }}</label>
+                {% endif %}
+                {% for option in options %}
+                    <div class="flex items-center ps-4 border border-gray-200 rounded-lg dark:border-gray-700 hover:border-purple-400">
+                        {% include option.template_name with widget=option %}
+                    </div>
+                {% endfor %}
+                {% if group %}</div>{% endif %}
+        {% endfor %}
+    </div>
+{% endwith %}

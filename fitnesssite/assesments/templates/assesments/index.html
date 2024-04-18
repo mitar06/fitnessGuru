@@ -1,0 +1,73 @@
+{% extends 'assesments/base.html' %}
+{% block content %}
+    <div class="container-fluid relative min-h-screen mx-auto">
+        <div class="w-full lg:h-4 h-2 bg-gray-200  rounded-r-full  dark:bg-gray-700 absolute top-0 left-0 transition-[height] ease-in-out duration-700"
+             x-data="assesmentProgress"
+             @progress-updated.window="adjustProgressBar"
+             x-cloak>
+            <div class="lg:h-4 h-2 w-[0px] bg-blue-600 rounded-r-full dark:bg-blue-500 transition-[width] ease-in-out duration-700"
+                 :style="{ width : `${progressPercentage}%` }"></div>
+        </div>
+        <div class="pt-4 px-2 sm:px-0">
+            <form action=""
+                  class="sm:w-[500px] w-full mx-auto"
+                  x-data="assesmentForm"
+                  @keydown.enter="goToNextStep"
+                  x-cloak>
+                {{ form }}
+                <div x-ref="controllsContainer" class=" flex flex-col ">
+                    <button type="button"
+                            class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
+                            @click="goToNextStep"
+                            :disabled="$wizard.cannotGoForward()"
+                            x-show="$wizard.isNotLast()">Continue</button>
+                    <button type="button"
+                            class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
+                            @click="goToPreviousStep"
+                            :disabled="$wizard.cannotGoBack()"
+                            x-show="$wizard.isNotFirst()">Back</button>
+                    <button type="submit"
+                            class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
+                            :disabled="$wizard.isNotComplete()"
+                            x-show="$wizard.isLast()">Get Results</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block extra_js %}
+    <script type="text/javascript">
+        document.addEventListener('alpine:init', () => {
+           Alpine.data('assesmentProgress' ,() => (
+            {
+                progressPercentage : 2,
+                adjustProgressBar($event){
+                    this.progressPercentage = $event.detail;
+                }
+
+
+            }
+           ));
+           Alpine.data('assesmentForm', () => (
+            {
+                'favorite_activity' : '',
+                'weekly_training_hours' : '',
+                'main_fitness_goal' : '',
+                'eating_habits_level' : '',
+                goToNextStep(){
+                    
+                    this.$wizard.forward();
+                    this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int);
+                },
+                goToPreviousStep(){
+                    this.$wizard.back();
+                    this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int);
+                },
+                init(){
+                    this.$nextTick(() => {  this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int );});
+                }
+            }
+           ));
+        })
+    </script>
+{% endblock extra_js %}

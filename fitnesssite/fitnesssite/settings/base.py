@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "testemonials",
     "stream_fields",
     "blog",
+    "assesments.apps.AssesmentsConfig",
 ]
 
 MIDDLEWARE = [
