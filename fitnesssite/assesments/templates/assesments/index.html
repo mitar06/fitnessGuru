@@ -12,15 +12,27 @@
             <form action=""
                   class="sm:w-[500px] w-full mx-auto"
                   x-data="assesmentForm"
-                  @keydown.enter="goToNextStep"
                   x-cloak>
+                {% csrf_token %}
+                
+                {% comment %}
                 {{ form }}
+                {% endcomment %}
+                
+                
+                {% for field in form %}
+                    <div  x-wizard:step>
+                        {{field}}
+                    </div>    
+                {% endfor %}
+                    
+                
                 <div x-ref="controllsContainer" class=" flex flex-col ">
                     <button type="button"
                             class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
                             @click="goToNextStep"
                             :disabled="$wizard.cannotGoForward()"
-                            x-show="$wizard.isNotLast()">Continue</button>
+                            x-show="showContinueButton()">Continue</button>
                     <button type="button"
                             class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
                             @click="goToPreviousStep"
@@ -45,7 +57,6 @@
                     this.progressPercentage = $event.detail;
                 }
 
-
             }
            ));
            Alpine.data('assesmentForm', () => (
@@ -54,8 +65,41 @@
                 'weekly_training_hours' : '',
                 'main_fitness_goal' : '',
                 'eating_habits_level' : '',
+                'preferred_meal_frequency' : '',
+                'sleep_quality' : '',
+                'stress_management_style' : '',
+                'meat_preferences' : [],
+                'vegetable_preferences' : [],
+
+                registerRadioButtonsEvents(radioNodes){
+                    /* We are registering click events to all radio buttons 
+                       This way user can advance through the wizard by only selecting a radio option
+                    */
+                    if(!radioNodes){
+                        return;
+                    }
+                    radioNodes.forEach(node => {
+                        node.addEventListener('click', (event) =>{
+                            this.goToNextStep();
+                        })
+                    })
+                },
+                showContinueButton(){
+                   const { el:element } = this.$wizard.current();
+                   if(this.stepContainsRadioInputs(element)){
+                        return false;
+                   }
+                   console.log(this.$wizard.isNotLast());
+                   return this.$wizard.isNotLast();
+                },
+                stepContainsRadioInputs(step){
+                    if(step.querySelectorAll("input[type='radio']").length){
+                        return true;
+                    }
+                    return false;
+                },
                 goToNextStep(){
-                    
+                    console.log(this.$wizard.current().el.querySelectorAll("input[type='radio']"))
                     this.$wizard.forward();
                     this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int);
                 },
@@ -65,6 +109,10 @@
                 },
                 init(){
                     this.$nextTick(() => {  this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int );});
+                    this.$nextTick(() => {   console.log(this.$wizard.current().el);});
+                    radioElements = document.querySelectorAll("input[type='radio']");
+                    
+                    this.registerRadioButtonsEvents(radioElements);
                 }
             }
            ));

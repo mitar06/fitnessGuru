@@ -1,5 +1,5 @@
 {% if widget.wrap_label %}
-    <label class="w-full py-4 ms-2 text-sm flex items-center gap-x-2 font-medium text-gray-900 dark:text-gray-300" {% if widget.attrs.id %}for="{{ widget.attrs.id }}"{% endif %}>
+    <label class="w-full py-4 ms-2 text-lg flex items-center gap-x-2 font-medium text-gray-900 dark:text-gray-300" {% if widget.attrs.id %}for="{{ widget.attrs.id }}"{% endif %}>
     {% endif %}
     {% include "django/forms/widgets/input.html" %}
     {% if widget.wrap_label %}
