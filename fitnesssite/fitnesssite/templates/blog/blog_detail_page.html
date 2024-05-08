@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags comments comments_xtd i18n cache %}
 {% block content %}
-<div  class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700 fixed top-0 letf-0" x-cloak x-show="showProgress" x-data="blogProgress" @scroll.window="updateProgress">
-    <div class="bg-purple-600 h-1.5 rounded-full dark:bg-purple-500"  :style="{ width : `${progress}%` }"></div>
-  </div>
+    <div class="w-full bg-gray-200 rounded-full h-1.5 dark:bg-gray-700 fixed top-0 letf-0"
+         x-cloak
+         x-show="showProgress"
+         x-data="blogProgress"
+         @scroll.window="updateProgress">
+        <div class="bg-purple-600 h-1.5 rounded-full dark:bg-purple-500"
+             :style="{ width : `${progress}%` }"></div>
+    </div>
     <div class="container mx-auto px-4 md:px-16 lg:px-32  2xl:px-57 min-h-screen ">
         <div class="grid grid-cols-1  xl:grid-cols-5">
             <div class="xl:col-span-3 xl:col-start-2 pb-4 " id="blogBody">
@@ -23,7 +28,15 @@
             <div class="col-span-full xl:col-span-1 space-x-4 xl:space-x-0 xl:space-y-2 flex flex-row xl:flex-col justify-center items-stretch items-center xl:items-stretch xl:justify-start xl:pt-24 ">
                 <div class="block xl:max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow  flex-1 xl:flex-initial dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Categories</h5>
-                    <p class="font-normal text-gray-700 dark:text-gray-400">List</p>
+                    
+                    {% for category in self.categories.all %}
+                    <ul class="font-normal text-gray-700 dark:text-gray-400 grid gap-y-2 py-2">
+                        <li>
+                            <a href="{% pageurl page.get_parent %}?category={{ category.blog_category.slug }}"><span class="bg-blue-100 text-blue-800 hover:text-black hover:bg-blue-300 text-sm font-medium me-2 px-2.5 py-1 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ category.blog_category.name }}</span></a>
+                        </li>
+                    </ul>
+        
+                    {% endfor %}
                 </div>
                 <div class="block xl:max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadowflex-1 xl:flex-initial dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 ">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Tags</h5>
@@ -38,7 +51,7 @@
             </div>
             <div class="xl:col-span-3 xl:col-start-2 border border-gray-400 rounded-lg py-2 my-4">
                 <h4 class="text-xl py-4 font-semibold text-center dark:text-white">{% trans 'Comments' %}</h4>
-            {% cache 1000 comment_tree self.id %}
+                {% cache 1000 comment_tree self.id %}
                 {% render_xtdcomment_tree for self allow_flagging %}
             {% endcache %}
             <div class="px-2">{% render_comment_form for self %}</div>
