@@ -7,21 +7,46 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0007_alter_homepage_content'),
-        ('wagtailcore', '0091_remove_revision_submitted_for_moderation'),
-        ('wagtailimages', '0025_alter_image_file_alter_rendition_file'),
+        ("home", "0007_alter_homepage_content"),
+        ("wagtailcore", "0091_remove_revision_submitted_for_moderation"),
+        ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SiteSettings',
+            name="SiteSettings",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('logo', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image', verbose_name='Business logo')),
-                ('site', models.OneToOneField(editable=False, on_delete=django.db.models.deletion.CASCADE, to='wagtailcore.site')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "logo",
+                    models.OneToOneField(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.image",
+                        verbose_name="Business logo",
+                    ),
+                ),
+                (
+                    "site",
+                    models.OneToOneField(
+                        editable=False,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="wagtailcore.site",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

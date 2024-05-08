@@ -13,6 +13,7 @@ from wagtail.snippets.models import register_snippet
 
 from django.shortcuts import reverse
 
+
 @register_snippet
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -22,22 +23,22 @@ class BlogCategory(models.Model):
         max_length=250,
         blank=True,
         null=True,
-        help_text="A short description of the category, max. 250 characters."
-        )
+        help_text="A short description of the category, max. 250 characters.",
+    )
     category_image = models.ForeignKey(
         "wagtailimages.Image",
-        verbose_name='Category Image',
+        verbose_name="Category Image",
         blank=True,
         null=True,
-        help_text='Category Image to display as a thumbnail (resized to 150x150).',
+        help_text="Category Image to display as a thumbnail (resized to 150x150).",
         on_delete=models.SET_NULL,
-        )
+    )
 
     panels = [
         FieldPanel("name"),
         FieldPanel("slug"),
         FieldPanel("category_image"),
-        FieldPanel("short_description")
+        FieldPanel("short_description"),
     ]
 
     def __str__(self):
@@ -47,7 +48,9 @@ class BlogCategory(models.Model):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
+
 # Create your models here.
+
 
 class PostPageBlogCategory(models.Model):
     page = ParentalKey(
@@ -71,8 +74,7 @@ class CategoryIndexPage(Page):
         context = super().get_context(request, *args, **kwargs)
         context["categories"] = BlogCategory.objects.all()
         return context
-    
-   
+
 
 class BlogIndexPage(Page):
     custom_title = models.CharField(
@@ -84,21 +86,23 @@ class BlogIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        posts = BlogDetailPage.objects.live().public().prefetch_related('categories')
-       
+        posts = BlogDetailPage.objects.live().public().prefetch_related("categories")
+
         tag = request.GET.get("tag")
-        category = request.GET.get('category')
-        
+        category = request.GET.get("category")
+
         if tag:
             posts = posts.filter(tags__name=tag)
 
         if category:
-            try :
-                categoryObject = BlogCategory.objects.filter(slug__exact=category).first()
+            try:
+                categoryObject = BlogCategory.objects.filter(
+                    slug__exact=category
+                ).first()
                 posts = posts.filter(categories__blog_category=categoryObject)
-            except BlogCategory.DoesNotExist as e :
-                context['filtered_category'] = None
-            context['filtered_category'] = categoryObject.name    
+            except BlogCategory.DoesNotExist as e:
+                context["filtered_category"] = None
+            context["filtered_category"] = categoryObject.name
         context["posts"] = posts
         return context
 
@@ -111,10 +115,9 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogDetailPage(Page):
-    
-    def get_absolute_url(self,request=None):
 
-        
+    def get_absolute_url(self, request=None):
+
         possible_sites = [
             (pk, path, url, language_code)
             for pk, path, url, language_code in self._get_site_root_paths(request)
@@ -126,9 +129,7 @@ class BlogDetailPage(Page):
 
         site_id, root_path, root_url, language_code = possible_sites[0]
 
-
-        return reverse(
-            'wagtail_serve', args=(self.url_path[len(root_path):],))
+        return reverse("wagtail_serve", args=(self.url_path[len(root_path) :],))
 
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     custom_title = models.CharField(
@@ -155,11 +156,10 @@ class BlogDetailPage(Page):
         blank=True,
     )
     content_panels = Page.content_panels + [
-        InlinePanel('categories', label='category'),
+        InlinePanel("categories", label="category"),
         FieldPanel("custom_title"),
         FieldPanel("banner_image"),
         FieldPanel("content"),
-
     ]
     promote_panels = Page.promote_panels + [
         FieldPanel("tags"),

@@ -14,84 +14,467 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('taggit', '0005_auto_20220424_2025'),
-        ('wagtailcore', '0091_remove_revision_submitted_for_moderation'),
-        ('wagtailimages', '0025_alter_image_file_alter_rendition_file'),
+        ("taggit", "0005_auto_20220424_2025"),
+        ("wagtailcore", "0091_remove_revision_submitted_for_moderation"),
+        ("wagtailimages", "0025_alter_image_file_alter_rendition_file"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BlogIndexPage',
+            name="BlogIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('custom_title', models.CharField(help_text='Overrides Wagtail title.', max_length=100)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                (
+                    "custom_title",
+                    models.CharField(
+                        help_text="Overrides Wagtail title.", max_length=100
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='CategoryIndexPage',
+            name="CategoryIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='BlogCategory',
+            name="BlogCategory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('slug', models.SlugField(max_length=80, unique=True)),
-                ('category_image', models.ForeignKey(blank=True, help_text='Category Image to display as a thumbnail (rezized to 150x150).', null=True, on_delete=django.db.models.deletion.SET_NULL, to='wagtailimages.image', verbose_name='Category Image')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("slug", models.SlugField(max_length=80, unique=True)),
+                (
+                    "category_image",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="Category Image to display as a thumbnail (rezized to 150x150).",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="wagtailimages.image",
+                        verbose_name="Category Image",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Category',
-                'verbose_name_plural': 'Categories',
+                "verbose_name": "Category",
+                "verbose_name_plural": "Categories",
             },
         ),
         migrations.CreateModel(
-            name='BlogDetailPage',
+            name="BlogDetailPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('custom_title', models.CharField(help_text='Overrides Wagtail title.', max_length=100)),
-                ('content', wagtail.fields.StreamField([('title', wagtail.blocks.StructBlock([('text', wagtail.blocks.CharBlock(help_text='Text of the title', required=True))])), ('cards', wagtail.blocks.StructBlock([('cards', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(help_text='Title text for the card (100 charecters max.)', max_length=100)), ('text', wagtail.blocks.TextBlock(help_text='Optional card text. (255 characters max.)', max_length=255, required=False)), ('image', wagtail.images.blocks.ImageChooserBlock(help_text='Image will be automatically cropped for performance')), ('link', wagtail.blocks.StructBlock([('link_text', wagtail.blocks.CharBlock(default='Read More', max_length=50)), ('internal_page', wagtail.blocks.PageChooserBlock(required=False)), ('external_link', wagtail.blocks.URLBlock(required=False))], help_text='Select a page or input a valid External URL.'))])))])), ('image_and_text', wagtail.blocks.StructBlock([('image', wagtail.images.blocks.ImageChooserBlock(help_text='Image will be automatically cropped for performance')), ('image_alignment', wagtail.blocks.ChoiceBlock(choices=[('left', 'Left'), ('right', 'Right')], help_text='Choose alignment of the image')), ('title', wagtail.blocks.CharBlock(help_text='60 characters max', max_length=60)), ('text', wagtail.blocks.TextBlock(max_length=140, required=False)), ('link', wagtail.blocks.StructBlock([('link_text', wagtail.blocks.CharBlock(default='Read More', max_length=50)), ('internal_page', wagtail.blocks.PageChooserBlock(required=False)), ('external_link', wagtail.blocks.URLBlock(required=False))]))])), ('call_to_action', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(help_text='100 characters max.', max_length=100)), ('link', wagtail.blocks.StructBlock([('link_text', wagtail.blocks.CharBlock(default='Read More', max_length=50)), ('internal_page', wagtail.blocks.PageChooserBlock(required=False)), ('external_link', wagtail.blocks.URLBlock(required=False))])), ('background_image', wagtail.images.blocks.ImageChooserBlock())])), ('frequently_asked_questions', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(help_text='100 characters max.', max_length=100)), ('questions', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('asked_question', wagtail.blocks.TextBlock(help_text='FAQ Question', max_length=200)), ('answer', wagtail.blocks.RichTextBlock(help_text='FAQ Answer', max_length=200))])))])), ('multi_step', wagtail.blocks.StructBlock([('title', wagtail.blocks.CharBlock(help_text='Section title 100 characters max.', max_length=100)), ('steps', wagtail.blocks.ListBlock(wagtail.blocks.StructBlock([('step_title', wagtail.blocks.CharBlock(help_text='Individual step title, 100 characters max.', max_length=100)), ('step_description', wagtail.blocks.TextBlock(help_text='A short desctiption of the step', max_length=200))])))])), ('rich_text', wagtail.blocks.RichTextBlock())], blank=True, null=True)),
-                ('banner_image', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                (
+                    "custom_title",
+                    models.CharField(
+                        help_text="Overrides Wagtail title.", max_length=100
+                    ),
+                ),
+                (
+                    "content",
+                    wagtail.fields.StreamField(
+                        [
+                            (
+                                "title",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "text",
+                                            wagtail.blocks.CharBlock(
+                                                help_text="Text of the title",
+                                                required=True,
+                                            ),
+                                        )
+                                    ]
+                                ),
+                            ),
+                            (
+                                "cards",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "cards",
+                                            wagtail.blocks.ListBlock(
+                                                wagtail.blocks.StructBlock(
+                                                    [
+                                                        (
+                                                            "title",
+                                                            wagtail.blocks.CharBlock(
+                                                                help_text="Title text for the card (100 charecters max.)",
+                                                                max_length=100,
+                                                            ),
+                                                        ),
+                                                        (
+                                                            "text",
+                                                            wagtail.blocks.TextBlock(
+                                                                help_text="Optional card text. (255 characters max.)",
+                                                                max_length=255,
+                                                                required=False,
+                                                            ),
+                                                        ),
+                                                        (
+                                                            "image",
+                                                            wagtail.images.blocks.ImageChooserBlock(
+                                                                help_text="Image will be automatically cropped for performance"
+                                                            ),
+                                                        ),
+                                                        (
+                                                            "link",
+                                                            wagtail.blocks.StructBlock(
+                                                                [
+                                                                    (
+                                                                        "link_text",
+                                                                        wagtail.blocks.CharBlock(
+                                                                            default="Read More",
+                                                                            max_length=50,
+                                                                        ),
+                                                                    ),
+                                                                    (
+                                                                        "internal_page",
+                                                                        wagtail.blocks.PageChooserBlock(
+                                                                            required=False
+                                                                        ),
+                                                                    ),
+                                                                    (
+                                                                        "external_link",
+                                                                        wagtail.blocks.URLBlock(
+                                                                            required=False
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                                help_text="Select a page or input a valid External URL.",
+                                                            ),
+                                                        ),
+                                                    ]
+                                                )
+                                            ),
+                                        )
+                                    ]
+                                ),
+                            ),
+                            (
+                                "image_and_text",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "image",
+                                            wagtail.images.blocks.ImageChooserBlock(
+                                                help_text="Image will be automatically cropped for performance"
+                                            ),
+                                        ),
+                                        (
+                                            "image_alignment",
+                                            wagtail.blocks.ChoiceBlock(
+                                                choices=[
+                                                    ("left", "Left"),
+                                                    ("right", "Right"),
+                                                ],
+                                                help_text="Choose alignment of the image",
+                                            ),
+                                        ),
+                                        (
+                                            "title",
+                                            wagtail.blocks.CharBlock(
+                                                help_text="60 characters max",
+                                                max_length=60,
+                                            ),
+                                        ),
+                                        (
+                                            "text",
+                                            wagtail.blocks.TextBlock(
+                                                max_length=140, required=False
+                                            ),
+                                        ),
+                                        (
+                                            "link",
+                                            wagtail.blocks.StructBlock(
+                                                [
+                                                    (
+                                                        "link_text",
+                                                        wagtail.blocks.CharBlock(
+                                                            default="Read More",
+                                                            max_length=50,
+                                                        ),
+                                                    ),
+                                                    (
+                                                        "internal_page",
+                                                        wagtail.blocks.PageChooserBlock(
+                                                            required=False
+                                                        ),
+                                                    ),
+                                                    (
+                                                        "external_link",
+                                                        wagtail.blocks.URLBlock(
+                                                            required=False
+                                                        ),
+                                                    ),
+                                                ]
+                                            ),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            (
+                                "call_to_action",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "title",
+                                            wagtail.blocks.CharBlock(
+                                                help_text="100 characters max.",
+                                                max_length=100,
+                                            ),
+                                        ),
+                                        (
+                                            "link",
+                                            wagtail.blocks.StructBlock(
+                                                [
+                                                    (
+                                                        "link_text",
+                                                        wagtail.blocks.CharBlock(
+                                                            default="Read More",
+                                                            max_length=50,
+                                                        ),
+                                                    ),
+                                                    (
+                                                        "internal_page",
+                                                        wagtail.blocks.PageChooserBlock(
+                                                            required=False
+                                                        ),
+                                                    ),
+                                                    (
+                                                        "external_link",
+                                                        wagtail.blocks.URLBlock(
+                                                            required=False
+                                                        ),
+                                                    ),
+                                                ]
+                                            ),
+                                        ),
+                                        (
+                                            "background_image",
+                                            wagtail.images.blocks.ImageChooserBlock(),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            (
+                                "frequently_asked_questions",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "title",
+                                            wagtail.blocks.CharBlock(
+                                                help_text="100 characters max.",
+                                                max_length=100,
+                                            ),
+                                        ),
+                                        (
+                                            "questions",
+                                            wagtail.blocks.ListBlock(
+                                                wagtail.blocks.StructBlock(
+                                                    [
+                                                        (
+                                                            "asked_question",
+                                                            wagtail.blocks.TextBlock(
+                                                                help_text="FAQ Question",
+                                                                max_length=200,
+                                                            ),
+                                                        ),
+                                                        (
+                                                            "answer",
+                                                            wagtail.blocks.RichTextBlock(
+                                                                help_text="FAQ Answer",
+                                                                max_length=200,
+                                                            ),
+                                                        ),
+                                                    ]
+                                                )
+                                            ),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            (
+                                "multi_step",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "title",
+                                            wagtail.blocks.CharBlock(
+                                                help_text="Section title 100 characters max.",
+                                                max_length=100,
+                                            ),
+                                        ),
+                                        (
+                                            "steps",
+                                            wagtail.blocks.ListBlock(
+                                                wagtail.blocks.StructBlock(
+                                                    [
+                                                        (
+                                                            "step_title",
+                                                            wagtail.blocks.CharBlock(
+                                                                help_text="Individual step title, 100 characters max.",
+                                                                max_length=100,
+                                                            ),
+                                                        ),
+                                                        (
+                                                            "step_description",
+                                                            wagtail.blocks.TextBlock(
+                                                                help_text="A short desctiption of the step",
+                                                                max_length=200,
+                                                            ),
+                                                        ),
+                                                    ]
+                                                )
+                                            ),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            ("rich_text", wagtail.blocks.RichTextBlock()),
+                        ],
+                        blank=True,
+                        null=True,
+                    ),
+                ),
+                (
+                    "banner_image",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.image",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='BlogPageTag',
+            name="BlogPageTag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_items', to='blog.blogdetailpage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='%(app_label)s_%(class)s_items', to='taggit.tag')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_items",
+                        to="blog.blogdetailpage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="%(app_label)s_%(class)s_items",
+                        to="taggit.tag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='blogdetailpage',
-            name='tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.BlogPageTag', to='taggit.Tag', verbose_name='Tags'),
+            model_name="blogdetailpage",
+            name="tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="blog.BlogPageTag",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.CreateModel(
-            name='PostPageBlogCategory',
+            name="PostPageBlogCategory",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('blog_category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='post_pages', to='blog.blogcategory')),
-                ('page', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='categories', to='blog.blogdetailpage')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "blog_category",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="post_pages",
+                        to="blog.blogcategory",
+                    ),
+                ),
+                (
+                    "page",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="categories",
+                        to="blog.blogdetailpage",
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('page', 'blog_category')},
+                "unique_together": {("page", "blog_category")},
             },
         ),
     ]

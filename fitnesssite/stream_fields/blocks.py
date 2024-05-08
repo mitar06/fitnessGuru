@@ -2,6 +2,7 @@ from django.db import models
 
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+
 # Create your models here.
 
 
@@ -83,7 +84,13 @@ class ImageAndTextBlock(blocks.StructBlock):
 
 class CallToActionBlock(blocks.StructBlock):
     title = blocks.CharBlock(max_length=100, help_text="100 characters max.")
-    subtitle = blocks.CharBlock(max_length=200, help_text="200 characters max.", required=False, blank=True, null=True)
+    subtitle = blocks.CharBlock(
+        max_length=200,
+        help_text="200 characters max.",
+        required=False,
+        blank=True,
+        null=True,
+    )
     link = GenericLink()
     background_image = ImageChooserBlock()
 
@@ -128,23 +135,22 @@ class MultiStepProcessBlock(blocks.StructBlock):
         template = "stream_fields/multi_step_block.html"
 
 
-
 class NewsletterEmailCollectionBlock(blocks.StructBlock):
-    '''Component containing a form for gathering newsletter emails'''
+    """Component containing a form for gathering newsletter emails"""
+
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters)'
+        max_length=200, help_text="Main title for this section (max 200 characters)"
     )
     subtitle = blocks.CharBlock(
         max_length=200, help_text="Subtitle for this section (max 200 characters)"
     )
     button_text = blocks.CharBlock(
-        max_length=20, help_text="Text for the submit button",default="Subscribe"
+        max_length=20, help_text="Text for the submit button", default="Subscribe"
     )
     disclaimer_text = blocks.CharBlock(
         max_length=200, help_text="Text disclaiming Terms and Conditions"
     )
     terms_and_conditions_link = GenericLink()
-
 
     class Meta:
         template = "stream_fields/news_letter_subscription_block.html"
@@ -152,118 +158,120 @@ class NewsletterEmailCollectionBlock(blocks.StructBlock):
 
 class TimelineItem(blocks.StructBlock):
     marker_caption = blocks.CharBlock(
-        max_length=50, help_text='Text for the left side marker of the timeline'
+        max_length=50, help_text="Text for the left side marker of the timeline"
     )
     title_primary = blocks.CharBlock(
-        max_length=50, help_text='Bold title on the right site of the timeline'
+        max_length=50, help_text="Bold title on the right site of the timeline"
     )
     title_secondary = blocks.CharBlock(
-        max_length=50, help_text='Cursive title above the primary title'
+        max_length=50, help_text="Cursive title above the primary title"
     )
-    content =  blocks.CharBlock(
-        max_length=50, help_text='Content describing the individual timeline item.'
+    content = blocks.CharBlock(
+        max_length=50, help_text="Content describing the individual timeline item."
     )
-
-    
-
 
 
 class TimelineBlock(blocks.StructBlock):
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters)'
+        max_length=200, help_text="Main title for this section (max 200 characters)"
     )
     subtitle = blocks.CharBlock(
-        max_length=200, help_text='Optional subtitle, (max 200 characters)'
+        max_length=200, help_text="Optional subtitle, (max 200 characters)"
     )
     items = blocks.ListBlock(TimelineItem())
 
     class Meta:
-        template = 'stream_fields/timeline_block.html'
+        template = "stream_fields/timeline_block.html"
 
 
 class WhyUsCard(blocks.StructBlock):
-    icon = ImageChooserBlock(required=False,help_text='Icon to be displayed in a card, will be downscaled for performance.')
+    icon = ImageChooserBlock(
+        required=False,
+        help_text="Icon to be displayed in a card, will be downscaled for performance.",
+    )
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters).'
+        max_length=200, help_text="Main title for this section (max 200 characters)."
     )
     content = blocks.CharBlock(
-        max_length=200, help_text='A short description of the card.'
+        max_length=200, help_text="A short description of the card."
     )
-
 
 
 class WhyUsBlock(blocks.StructBlock):
     pill_caption = blocks.CharBlock(
-        max_length=50, help_text='Main title for this section (max 50 characters).'
+        max_length=50, help_text="Main title for this section (max 50 characters)."
     )
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters).'
+        max_length=200, help_text="Main title for this section (max 200 characters)."
     )
     subtitle = blocks.CharBlock(
-        max_length=200, help_text='Optional subtitle, (max 200 characters).'
+        max_length=200, help_text="Optional subtitle, (max 200 characters)."
     )
 
     featured_cards = blocks.ListBlock(WhyUsCard())
 
     class Meta:
-        template = 'stream_fields/why_us_block.html'
+        template = "stream_fields/why_us_block.html"
+
 
 class FreeProductCard(blocks.StructBlock):
-    card_image = ImageChooserBlock(help_text='Background image for the card, will be overlayed by text.')
+    card_image = ImageChooserBlock(
+        help_text="Background image for the card, will be overlayed by text."
+    )
     product_link = GenericLink()
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters).'
+        max_length=200, help_text="Main title for this section (max 200 characters)."
     )
     content = blocks.CharBlock(
-        max_length=200, help_text='Main content for the card (max 200 characters).'
+        max_length=200, help_text="Main content for the card (max 200 characters)."
     )
 
+
 class FeaturedFreeProductBlock(blocks.StructBlock):
-    '''
+    """
     Used for accentuating a free Ebook or a Giveaway
-    '''
+    """
+
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters).'
+        max_length=200, help_text="Main title for this section (max 200 characters)."
     )
     subtitle = blocks.CharBlock(
-        max_length=200, help_text='Optional subtitle, (max 200 characters).'
+        max_length=200, help_text="Optional subtitle, (max 200 characters)."
     )
     free_product_cards = blocks.ListBlock(FreeProductCard())
 
     class Meta:
-        template = 'stream_fields/free_products_block.html'
+        template = "stream_fields/free_products_block.html"
 
 
 class PlanBreakdownListItem(blocks.StructBlock):
-    '''
+    """
     A list item showing a bullet point in a showcase block
-    '''
+    """
+
     text = blocks.CharBlock(
-        max_length=200, help_text='A single feature of the product.'
+        max_length=200, help_text="A single feature of the product."
     )
+
 
 class SinglePlanBreakdownAndImageBlock(blocks.StructBlock):
-    '''
+    """
     Used to showcase a single meal/workout plan.
     Chosen image will be inset and overlayed by plan bullet points
-    '''
+    """
 
     title = blocks.CharBlock(
-        max_length=200, help_text='Main title for this section (max 200 characters).'
+        max_length=200, help_text="Main title for this section (max 200 characters)."
     )
     subtitle = blocks.CharBlock(
-        max_length=200, help_text='Optional subtitle, (max 200 characters).'
+        max_length=200, help_text="Optional subtitle, (max 200 characters)."
     )
 
-    list_items = blocks.ListBlock(
-        PlanBreakdownListItem(), 
-        max_num=6
-    )
+    list_items = blocks.ListBlock(PlanBreakdownListItem(), max_num=6)
 
     showcase_image = ImageChooserBlock(
-        help_text='Image to be displayed with the plan breakdown.'
+        help_text="Image to be displayed with the plan breakdown."
     )
 
-
     class Meta:
-        template = 'stream_fields/single_plan_breakdown_and_image_block.html'
+        template = "stream_fields/single_plan_breakdown_and_image_block.html"

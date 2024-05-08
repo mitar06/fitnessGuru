@@ -14,7 +14,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     re_path(r"^comments/", include("django_comments_xtd.urls")),
-    re_path(r"^assesment/", include("assesments.urls"))
+    re_path(r"^assesment/", include("assesments.urls")),
 ]
 
 

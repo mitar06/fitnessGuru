@@ -3,8 +3,8 @@
     <div {% if id %}id="{{ id }}"{% endif %}
          {% if widget.attrs.class %}class="{{ widget.attrs.class }}"{% endif %}>
          {% if widget.attrs.decorative_image %}
-            <div class="text-lg font-bold flex justify-center">
-               <img class="w-auto h-56" src="{% static widget.attrs.decorative_image %} " alt="">
+            <div class="text-lg font-bold flex justify-center mt-2" >
+               <img class="w-auto h-[300px]" src="{% static widget.attrs.decorative_image %} " alt="">
             </div>
          {% endif %}
          {% if widget.attrs.decorative_title %}

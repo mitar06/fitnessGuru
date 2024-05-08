@@ -1,6 +1,6 @@
 {% extends 'assesments/base.html' %}
 {% block content %}
-    <div class="container-fluid relative min-h-screen mx-auto">
+    <div class="container-fluid relative min-h-[94vh] h-auto mx-auto">
         <div class="w-full lg:h-4 h-2 bg-gray-200  rounded-r-full  dark:bg-gray-700 absolute top-0 left-0 transition-[height] ease-in-out duration-700"
              x-data="assesmentProgress"
              @progress-updated.window="adjustProgressBar"
@@ -8,26 +8,67 @@
             <div class="lg:h-4 h-2 w-[0px] bg-blue-600 rounded-r-full dark:bg-blue-500 transition-[width] ease-in-out duration-700"
                  :style="{ width : `${progressPercentage}%` }"></div>
         </div>
-        <div class="pt-4 px-2 sm:px-0">
-            <form action=""
-                  class="sm:w-[500px] w-full mx-auto"
+        <div class="py-4 px-2 sm:px-0 min-h-[90vh] h-auto">
+           
+            <form action="{% url 'assesments:index' %}"
+                  method="POST"
+                  class="sm:w-[500px] h-full flex flex-col items-between w-full mx-auto"
                   x-data="assesmentForm"
-                  x-cloak>
+                  x-cloak
+                  @keydown.enter.prevent=""
+                  novalidate
+                  >
+                  <div x-show="formError" class="p-4 mb-4 text-sm text-center text-red-800 font-bold rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                    <span class="font-medium">Error</span> <span x-text="formError"></span>
+                  </div>  
+               <div>
                 {% csrf_token %}
-                
                 {% comment %}
                 {{ form }}
                 {% endcomment %}
-                
-                
-                {% for field in form %}
-                    <div  x-wizard:step>
-                        {{field}}
-                    </div>    
-                {% endfor %}
-                    
-                
-                <div x-ref="controllsContainer" class=" flex flex-col ">
+                <div x-wizard:step>
+                    <div>
+                        <div class="flex flex-col items-center justify-center   mb-8 mt-2 lg:mb-16">
+                            <div class="relative flex w-full p-1 bg-white dark:bg-slate-900 rounded-full max-w-[14rem]">
+                                <span class="absolute inset-0 m-1 pointer-events-none" aria-hidden="true">
+                                    <span class="absolute inset-0 w-1/2 bg-indigo-500 rounded-full shadow-sm shadow-indigo-950/10 transform transition-transform duration-150 ease-in-out"
+                                          :class="metricMeasurements ? 'translate-x-0' : 'translate-x-full'"></span>
+                                </span>
+                                <button type="button"
+                                        class="relative flex-1 text-sm font-medium h-8 rounded-full focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600 text-white transition-colors duration-150 ease-in-out"
+                                        @click="metricMeasurements = true"
+                                        :class="metricMeasurements ? 'text-white' : 'text-slate-500 dark:text-slate-400'">
+                                    Metric <span class="text-indigo-200"></span>
+                                </button>
+                                <button type="button"
+                                        class="relative flex-1 text-sm font-medium h-8 rounded-full focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 dark:focus-visible:ring-slate-600  transition-colors duration-150 ease-in-out"
+                                        @click="metricMeasurements = false"
+                                        :class="metricMeasurements ? 'text-slate-500 dark:text-slate-400'  : 'text-white' ">
+                                    Imperial
+                                </button>
+                            </div>
+                            <div x-ref="measuremetnsTabs" class='w-full'>
+                                <div x-show="metricMeasurements" class="flex flex-col gap-y-1" x-ref="metricFields" >
+                                    
+                                    {% for field in measurements_metric %}
+                                        {{field}}
+                                    {% endfor %}
+                                        
+                                </div>
+                                <div x-show="!metricMeasurements" class="flex flex-col gap-y-1" x-ref="imperialFields">
+                                    
+                                    {% for field in measurements_imperial %}
+                                        {{field}}
+                                    {% endfor %}
+                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for field in form %}<div x-wizard:step>{{ field }}</div>{% endfor %}
+               </div>
+                <div x-ref="controllsContainer" class="flex flex-col">
                     <button type="button"
                             class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
                             @click="goToNextStep"
@@ -38,11 +79,15 @@
                             @click="goToPreviousStep"
                             :disabled="$wizard.cannotGoBack()"
                             x-show="$wizard.isNotFirst()">Back</button>
-                    <button type="submit"
-                            class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
-                            :disabled="$wizard.isNotComplete()"
-                            x-show="$wizard.isLast()">Get Results</button>
                 </div>
+                {% comment %}
+                <button type="submit" name="submit" class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"  x-show="$wizard.isLast()">Get Your Results</button>
+                {% endcomment %}
+                <input class="h-10 px-5 m-1 text-purple-100 text-lg font-semibold transition-colors duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700"
+                       x-show="$wizard.isLast()"
+                       type="submit"
+                       value="Submit"
+                       name="Submit" />
             </form>
         </div>
     </div>
@@ -50,6 +95,7 @@
 {% block extra_js %}
     <script type="text/javascript">
         document.addEventListener('alpine:init', () => {
+          
            Alpine.data('assesmentProgress' ,() => (
             {
                 progressPercentage : 2,
@@ -59,17 +105,28 @@
 
             }
            ));
+           Alpine.data('measurementsWidget', () => ({
+            'isImperial' : false,
+            toggleMetric(){
+                this.isImperial = !this.isImperial;
+            }
+       })); 
            Alpine.data('assesmentForm', () => (
             {
                 'favorite_activity' : '',
+                'workout_frequency' : '',
                 'weekly_training_hours' : '',
                 'main_fitness_goal' : '',
+                'energy_level_slumps' : '',
                 'eating_habits_level' : '',
                 'preferred_meal_frequency' : '',
                 'sleep_quality' : '',
                 'stress_management_style' : '',
                 'meat_preferences' : [],
                 'vegetable_preferences' : [],
+                'formError' : '',
+                
+                'metricMeasurements' : true,
 
                 registerRadioButtonsEvents(radioNodes){
                     /* We are registering click events to all radio buttons 
@@ -84,13 +141,25 @@
                         })
                     })
                 },
+                scrollToTop(){
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
                 showContinueButton(){
                    const { el:element } = this.$wizard.current();
                    if(this.stepContainsRadioInputs(element)){
                         return false;
                    }
-                   console.log(this.$wizard.isNotLast());
                    return this.$wizard.isNotLast();
+                },
+                allRequiredFieldsFilledForStep(step){
+                    let requiredElements = step.querySelectorAll("input[required]");
+                    console.log(requiredElements)
+                    if (Array.from(requiredElements).some(el => !el.value)){
+                        return false;
+                    }
+                    return true;
+                   
+                   
                 },
                 stepContainsRadioInputs(step){
                     if(step.querySelectorAll("input[type='radio']").length){
@@ -98,21 +167,64 @@
                     }
                     return false;
                 },
+
+                clearFormError(){
+                    this.formError = ''
+                },
                 goToNextStep(){
-                    console.log(this.$wizard.current().el.querySelectorAll("input[type='radio']"))
+                    this.clearFormError();
+                    if(!this.allRequiredFieldsFilledForStep(this.$wizard.current().el)){
+                        this.formError = 'Please Fill out the required fields'
+                        return;
+                    }
+
+                    this.scrollToTop();
                     this.$wizard.forward();
                     this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int);
                 },
                 goToPreviousStep(){
+                    this.scrollToTop();
                     this.$wizard.back();
                     this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int);
                 },
+                disableUnusedMeasurementFields(isMetric=true){
+                    /* Disables metric fields when imperial system is selecred for body measurements and vice versa
+                        Defaults to metric measurements
+                    */
+                    let fields = [];
+                    if(isMetric){
+                        fields = this.$refs.imperialFields.querySelectorAll("input[required]");
+                    }else{
+                        fields = this.$refs.metricFields.querySelectorAll("input[required]");
+                    }
+                    console.log(fields)
+                    fields.forEach(field => { field.required=false; field.disabled=true;})
+
+                },
+                enableUsedMeasurementFields(isMetric=true){
+                    let fields = [];
+                    if(!isMetric){
+                        fields = this.$refs.imperialFields.querySelectorAll("input");
+                    }else{
+                        fields = this.$refs.metricFields.querySelectorAll("input");
+                    }
+                    fields.forEach(field => { field.required=true; field.disabled=false; })
+
+                },
                 init(){
                     this.$nextTick(() => {  this.$dispatch("progress-updated" , this.$wizard.progress().percentage_int );});
-                    this.$nextTick(() => {   console.log(this.$wizard.current().el);});
-                    radioElements = document.querySelectorAll("input[type='radio']");
-                    
+                    this.$watch('metricMeasurements', (value) => {
+                        this.disableUnusedMeasurementFields(isMetric=value);
+                        this.enableUsedMeasurementFields(isMetric=value);
+                    })
+                   
+                    const radioElements = document.querySelectorAll("input[type='radio']");
                     this.registerRadioButtonsEvents(radioElements);
+                    this.disableUnusedMeasurementFields(isMetric=this.metricMeasurements);
+                    this.enableUsedMeasurementFields(isMetric=this.metricMeasurements);
+                },
+                processForm(){
+                    console.log('processing form.')
                 }
             }
            ));
