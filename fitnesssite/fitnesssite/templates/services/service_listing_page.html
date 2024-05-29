@@ -1,58 +1,46 @@
 {% extends 'base.html' %}
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags wagtailcore_tags %}
 {% block content %}
-    {% image page.banner_image original as img %}
-    <div class="w-full bg-cover bg-no-repeat bg-center h-96   grid md:grid-cols-3"
-         style="background-image : url('{{ img.url }}')">
-        <div class="md:col-start-2 md:col-span-1 grid items-center ">
-            <div>
-                <h2 class="text-4xl text-white text-center font-bold">{{ page.title }}</h2>
-                <h3 class="text-2xl text-white text-center ">{{ page.subtitle }}</h3>
-            </div>
-        </div>
-    </div>
-    <div class="sm:px-8 bg-[#524c70] py-24">
-        <div class="container mx-auto py-8 px-8 xl:px-32 gap-y-4 md:gap-y-0 grid md:grid-cols-2 content-center sm:gap-x-4">
-            <h1 class=" text-3xl md:text-5xl text-center sm:text-left text-white px-2 self-center">
-                Services we’re providing
-                to our customers
-            </h1>
-            <p class="md:text-xl text-lg text-center sm:text-left text-gray-300 px-2 self-center">
-                Lorem ipsum dolor sit
-                amet, consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. quis
-                nostrud exercitation ullamco laboris.
-            </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 content-center gap-y-4 sm:gap-x-4 py-8 px-8 xl:px-32 xl:container xl:mx-auto">
-            {% for service in services %}
-                <div class="w-full sm:max-w-xs overflow-hidden bg-#8066F4 border rounded-lg  group border-gray-200 sm:hover:bg-gray-200 hover:text-[#8066F4] justify-self-center">
-                    <a class="" href="{{ service.url }}">
-                        {% image service.service_image fill-300x200 as serImg %}
-                        <img class="md:group-hover:scale-105 w-full h-52 transition-all"
-                             src="{{ serImg.url }}"
-                             alt="{{ serImg.alt }}" />
-                    </a>
-                    <div class="p-5 flex flex-col sm:min-h-64 lg:mix-height-68 h-fill justify-between">
-                        <div>
-                            <a href="{{ service.url }}">
-                                <h5 class="mb-2 text-2xl font-bold md:group-hover:text-black tracking-tight text-[#dfe1d9]">{{ service.title }}</h5>
-                            </a>
-                            <p class="mb-3 font-normal text-white md:group-hover:text-gray-900 dark:text-gray-400">{{ service.description }}</p>
-                        </div>
-                        <a href="{{ service.url }}"
-                           class="group transition-all justify-items-start inline-flex items-center  text-md font-medium text-center text-secondary border border-b-1 border-transparent md:hover:border-b-secondary sm:hover:border-b-1    focus:outline-none focus:ring-blue-300 ">
-                            Read more
-                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                                 aria-hidden="true"
-                                 xmlns="http://www.w3.org/2000/svg"
-                                 fill="none"
-                                 viewBox="0 0 14 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                            </svg>
-                        </a>
-                    </div>
+    {% for content_block in self.content %}
+        {% if content_block.block_type == 'rich_text' %}
+            <div class="container mx-auto px-4 md:px-16">
+                <div class=" max-w-2xl mx-auto prose prose-img:mx-auto prose-bold:dark:text-3xl prose-p:dark:text-gray-400 prose-h1:dark:text-white  prose-h1:text-secondary prose-h2:text-secondary prose-h3:text-secondary prose-h4:text-secondary  prose-ol:dark:text-white prose-h4:dark:text-white prose-h3:dark:text-white prose-ul:text-black prose-ul:dark:text-gray-400 prose-ul:marker:text-black prose-a:dark:text-blue-500 prose-a:text-blue-600 prose-h4:text-xl prose-h3:text-2xl lg:px-4 prose-headings:dark:text-gray-300">
+                    {% include_block content_block %}
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% else %}
+            {% include_block content_block %}
+        {% endif %}
+    {% endfor %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 content-center gap-y-4 sm:gap-x-4 py-8 px-8 xl:px-32 xl:container xl:mx-auto">
+        {% for service in services %}
+            <div class="w-full sm:max-w-xs overflow-hidden bg-#8066F4 border rounded-lg  group border-gray-200 sm:hover:bg-gray-200 hover:text-[#8066F4] justify-self-center">
+                <a class="" href="{{ service.url }}">
+                    {% image service.service_image fill-300x200 as serImg %}
+                    <img class="md:group-hover:scale-105 w-full h-52 transition-all"
+                         src="{{ serImg.url }}"
+                         alt="{{ serImg.alt }}" />
+                </a>
+                <div class="p-5 flex flex-col sm:min-h-64 lg:mix-height-68 h-fill justify-between">
+                    <div>
+                        <a href="{{ service.url }}">
+                            <h5 class="mb-2 text-2xl font-bold md:group-hover:text-black tracking-tight text-[#dfe1d9]">{{ service.title }}</h5>
+                        </a>
+                        <p class="mb-3 font-normal text-white md:group-hover:text-gray-900 dark:text-gray-400">{{ service.description }}</p>
+                    </div>
+                    <a href="{{ service.url }}"
+                       class="group transition-all justify-items-start inline-flex items-center  text-md font-medium text-center text-secondary border border-b-1 border-transparent md:hover:border-b-secondary sm:hover:border-b-1    focus:outline-none focus:ring-blue-300 ">
+                        Read more
+                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             fill="none"
+                             viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock content %}

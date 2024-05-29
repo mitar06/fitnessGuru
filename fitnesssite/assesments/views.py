@@ -8,7 +8,7 @@ from .utils import (
     calculate_bmi,
     calaulate_bmr,
     calculate_daily_water_intake,
-    get_bmi_bracket
+    get_bmi_bracket,
 )
 
 import uuid
@@ -52,7 +52,6 @@ def index(request):
 
         if metric_measurements.is_valid() and not body_measurements_processed:
             body_measurement_data = metric_measurements.cleaned_data
-
 
         if form.is_valid():
             temporary_uuid = request.COOKIES.get("assesment_customer_uuid")
@@ -112,8 +111,6 @@ def post_assesment_preview_dashboard(request, customer_uuid):
         customer_profile.height_cm, customer_profile.weight_kg, customer_profile.age
     )
 
-    
-
     daily_water_intake = calculate_daily_water_intake(customer_profile.weight_kg)
 
     context_data = {
@@ -122,9 +119,9 @@ def post_assesment_preview_dashboard(request, customer_uuid):
         "height": customer_profile.height_cm,
         "target_weight": customer_profile.target_weight_kg,
         "bmi": body_mass_index,
-        "bmi_label" : bmi_bracket_label,
+        "bmi_label": bmi_bracket_label,
         "bmr": basal_metabolic_rate,
-        'water_intake' : round(daily_water_intake,1)
+        "water_intake": round(daily_water_intake, 1),
     }
 
     return render(

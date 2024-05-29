@@ -42,10 +42,10 @@ class BlogCategory(models.Model):
     ]
 
     def get_category_ulr(self):
-        '''Currently rediredct to all posts with
-            category slug in the query string
+        """Currently rediredct to all posts with
+        category slug in the query string
 
-        '''
+        """
         return f"/blog?filtered_category={self.slug}"
 
     def __str__(self):
@@ -100,7 +100,7 @@ class BlogIndexPage(Page):
 
         if tag:
             posts = posts.filter(tags__name=tag)
-            context['current_tag'] = tag
+            context["current_tag"] = tag
 
         if category:
             try:

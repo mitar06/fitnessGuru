@@ -1,26 +1,32 @@
-{% load i18n wagtailimages_tags%}
-
+{% load i18n wagtailimages_tags %}
 <section class="py-16 px-4 md:px-32 lg:px-0 bg-tiel-200 dark:bg-gray-800 ">
-    
-    
     <div class="flex flex-col gap-y-7 lg:flex-row items-center justify-center">
-        <div class=" order-2 lg:order-1 w-full lg:max-w-80 text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white p-6 z-20">
-            <p  class="py-2 font-semibold text-purple-400">{% trans self.subtitle %}</p>
+        <div class=" order-2 lg:order-1 w-full lg:max-w-96 text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white p-6 z-20">
+            <p class="py-2 font-semibold text-purple-400">{% trans self.subtitle %}</p>
             <h2 class=" text-3xl font-semibold mb-4">{% trans self.title %}</h2>
             <dl class="max-w-xl text-gray-900 divide-y divide-grey-200 dark:text-white dark:divide-gray-700">
-                
                 {% for item in self.list_items %}
-                <div class="flex flex items-center gap-x-2 py-4">
-                    <svg class="w-7 h-7 stroke-teal-950 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path class="stroke-green-300" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                      </svg>
-                    <dd class="font-semibold">{% trans item.text %}</dd>
-                </div>
+                    <div class="flex flex items-center gap-x-2 py-4">
+                        <svg class="min-w-7 min-h-7 stroke-teal-950 text-gray-800 dark:text-white"
+                             aria-hidden="true"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="24"
+                             height="24"
+                             fill="none"
+                             viewBox="0 0 24 24">
+                            <path class="stroke-green-300" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <dd class="font-semibold">
+                            {% trans item.text %}
+                        </dd>
+                    </div>
                 {% endfor %}
-
             </dl>
         </div>
-        {% image self.showcase_image height-600 format-webp as showcaseImg %}
-        <img src="{{showcaseImg.url}}" alt="{{showcaseImg.alt}}" loading="lazy" class="rounded-md lg:-translate-x-6 mx-2 order-1 lg:order-2">
+        {% image self.showcase_image height-600 width-800 format-webp as showcaseImg %}
+        <img src="{{ showcaseImg.url }}"
+             alt="{{ showcaseImg.alt }}"
+             loading="lazy"
+             class="rounded-md lg:-translate-x-6 mx-2 order-1 lg:order-2">
     </div>
 </section>

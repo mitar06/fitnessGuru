@@ -275,3 +275,27 @@ class SinglePlanBreakdownAndImageBlock(blocks.StructBlock):
 
     class Meta:
         template = "stream_fields/single_plan_breakdown_and_image_block.html"
+
+
+class ServicesListingPageHeaderBlock(blocks.StructBlock):
+    """User as a heading for Services Listing Page
+    Allows the admin to add 2 decorative images
+    """
+
+    title = blocks.CharBlock(
+        max_length=200, help_text="Main title for this section (max 200 characters)."
+    )
+    images = blocks.ListBlock(
+        ImageChooserBlock(),
+        max_num=2,
+        )
+    text_content = blocks.TextBlock(
+        required=True,
+        max_length=500,
+        help_text="Main text content, 500 chanacters max."
+        )
+    
+    class Meta:
+        template = "stream_fields/services_listing_page_header_block.html"
+
+

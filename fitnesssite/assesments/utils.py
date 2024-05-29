@@ -34,17 +34,18 @@ def calculate_bmi(height_cm: Decimal, weight_kg: Decimal) -> float:
         return round(weight_kg / (height_cm / 100) ** 2, 1)
     return 0
 
+
 def get_bmi_bracket(bmi: Decimal) -> str:
-    '''Takes in a person's BMI and returns a BMI bracket
-        Brackets include:
-        Underweight
-        Healthy Range
-        Overweight
-        Obese
-        Severely Obese
-    '''
+    """Takes in a person's BMI and returns a BMI bracket
+    Brackets include:
+    Underweight
+    Healthy Range
+    Overweight
+    Obese
+    Severely Obese
+    """
     if not bmi:
-        raise ValueError('Plase provide a valid bmi value to this method')
+        raise ValueError("Plase provide a valid bmi value to this method")
 
     if bmi < 18.5:
         return "Underweight"
@@ -85,24 +86,25 @@ def calaulate_bmr(
 
 
 def calculate_metabolic_age(height_cm, weight_kg, age, is_male=True):
-    '''
+    """
     Still need to research for a good source of BMI data per age bracket
-    '''
+    """
     pass
 
+
 def calculate_daily_water_intake(weight_kg: Decimal) -> Decimal:
-    '''
-    Takes in a persons weight in kg 
+    """
+    Takes in a persons weight in kg
     @param : weight_kg Decimal
 
     @returns: recommended daily water intake in liters
-    
-    '''
+
+    """
 
     if not weight_kg:
-        raise ValueError('Please supply a weight in kilograms!')
+        raise ValueError("Please supply a weight in kilograms!")
 
     if not isinstance(weight_kg, numbers.Number):
         raise ValueError(f"{weight_kg} is not a number.")
-    
+
     return weight_kg * Decimal(0.03)

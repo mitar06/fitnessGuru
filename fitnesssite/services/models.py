@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from wagtail.admin.panels import FieldPanel, PageChooserPanel
+from wagtail.fields import StreamField
+from wagtail import blocks as base_blocks
+from stream_fields import blocks
 
 # Create your models here.
 from wagtail.models import Page
@@ -9,7 +12,7 @@ from wagtail.models import Page
 class ServiceListingPage(Page):
     subtitle = models.TextField(
         blank=True,
-        max_length=500,
+        max_length=1000,
     )
 
     banner_image = models.ForeignKey(
@@ -26,10 +29,31 @@ class ServiceListingPage(Page):
         max_length=500,
     )
 
+    content = StreamField(
+        [
+            ("title", blocks.TitleBlock()),
+            ("cards", blocks.CardsListBlock()),
+            ("image_and_text", blocks.ImageAndTextBlock()),
+            ("call_to_action", blocks.CallToActionBlock()),
+            ("frequently_asked_questions", blocks.FAQBlock()),
+            ("multi_step", blocks.MultiStepProcessBlock()),
+            ("newsletter_subscribe", blocks.NewsletterEmailCollectionBlock()),
+            ("timeline", blocks.TimelineBlock()),
+            ("why_us", blocks.WhyUsBlock()),
+            ("free_products", blocks.FeaturedFreeProductBlock()),
+            ("plan_showcase", blocks.SinglePlanBreakdownAndImageBlock()),
+            ("services_header", blocks.ServicesListingPageHeaderBlock()),
+            ('rich_text', base_blocks.RichTextBlock()),
+        ],
+        null=True,
+        blank=True,
+    )
+
     content_panels = Page.content_panels + [
         FieldPanel("subtitle"),
         FieldPanel("banner_image"),
         FieldPanel("banner_title"),
+        FieldPanel("content")
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -41,7 +65,7 @@ class ServiceListingPage(Page):
 class ServicePage(Page):
     description = models.TextField(
         blank=True,
-        max_length=500,
+        max_length=1000,
     )
     internal_page = models.ForeignKey(
         "wagtailcore.Page",
